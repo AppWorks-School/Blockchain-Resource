@@ -35,6 +35,8 @@ CryptoZombies 也做完後可以算是對 Solidity 有基本的了解以及實�
 
 實作 ERC20 的合約，並回答為何要先 approve 才能 transfer? 有沒有什麼新作法能夠達到 approve 的效果又可以不用把 approve 跟 transfer 分成兩筆交易，只要一筆交易就能達成目的？(空的 ERC20 template 待補)
 
+請研究為什麼 ERC20 的代幣需要自己加入 MetaMask 才看得到餘額? 又為什麼 Etherscan 不用自己加入 ERC20 就看得到餘額?
+
 實作 ERC721 的合約，並回答為何 ERC721 需要 ERC721TokenReceiver？(空的 ERC721 template 待補)
 
 實作一個白名單系統，只有在白名單內的地址可以呼叫特定函數，如果白名單數量很小例如五個，或是白名單數量很大例如一千個，分別要怎麼做比較好? 請使用 merkle tree 做一個函數判斷 msg.sender 是否在白名單內
@@ -46,6 +48,16 @@ getAccountBalance(address _account) public returns (uint256) {
   return balance[_account];
 }
 ```
+
+實作 EIP-712，讓你的 MetaMask 可以正確顯示要使用者簽名的資訊，而不是一串 hex code
+
+請研究什麼是 oracle， 並研究怎麼使用 Chainlink 的 oracle，並回答使用 Chainlink 跟使用 AMM 的報價有什麼不一樣?
+
+請研究什麼是 function signature，如果合約找不到這個 function 對應的 signature 會發生什麼事?
+
+請研究什麼是 internal transaction? 如何查詢 internal transaction 的資料?
+
+請研究什麼是 web3.js 或 ethers.js 的 static call，他們有什麼用處?
 
 實作一個可以產生亂數的合約，實作完後回答區塊鏈產生亂數為何很困難，確認自己的做法產生的亂數是否可以被預測，以及產生亂數的最佳實踐為何?
 
