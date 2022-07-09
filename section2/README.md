@@ -29,4 +29,5 @@
   3. [ERC721 實作](./ERC721-practice.md)
   4. [EIP-712 實作](./EIP-712.md)
 
-[上一階段](../section1/README.md) | [下一階段](../section3/README.md)
+---
+[上一階段](../section1/README.md) | [下一階段](../section3/README.md)・[回主頁](../README.md)

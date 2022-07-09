@@ -13,6 +13,5 @@ getAccountBalance(address _account) public returns (uint256) {
 
 ## 參考資料
 
-上一題 | 下一題
-
-[返回](./README.md)
+---
+[回階段二](./README.md)

@@ -12,4 +12,5 @@
 ### [自動化做市商（Automated Market Maker, AMM）](./AMM.md)
 ### [聚合器（Aggregator）](./aggregator.md)
 
-[上一階段](../section2/README.md)
+---
+[上一階段](../section2/README.md)・[回主頁](../README.md)

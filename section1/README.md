@@ -22,4 +22,5 @@ CryptoZombies 也做完後可以算是對 Solidity 有基本的了解以及實�
 ### 學習 Hardhat Fork 功能
 學習怎麼在 local 跑 [Ethernut](https://github.com/OpenZeppelin/ethernaut)
 
-[下一階段](../section2/README.md)
+---
+[下一階段](../section2/README.md)・[回主頁](../README.md)
