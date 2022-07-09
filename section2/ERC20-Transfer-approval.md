@@ -1,4 +1,4 @@
-# 練習二：Transfer approval
+# ERC20 - Transfer approval
 
 ## 說明：
 請詳讀 ERC20 的合約（空的 ERC20 template 待補)，並實作一次 ERC20 的 transfer。
@@ -8,3 +8,7 @@
 ## 先備知識
 
 ## 參考資料
+
+上一題 | 下一題
+
+[返回](./README.md)
