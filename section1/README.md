@@ -1,28 +1,42 @@
 # 階段一：區塊鏈基礎知識
 
 ## 說明：
-以下兩堂課請任選一堂並徹底上完，先對區塊鏈有個大概的了解，雖然有些內容(特別是實作)可能過時了但基礎的概念是不變的
+這裡整理幾個較完整的線上學習資源：
 
-- 英文: Udemy 上的 [ethereum-and-solidity-the-complete-developers-guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/)
-
-- 中文: Hahow 上的 [零基礎邁向區塊鏈工程師：Solidity 智能合約](https://hahow.in/courses/5b3cdd6ed03140001eebeadc)
+- [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/)
+- [零基礎邁向區塊鏈工程師：Solidity 智能合約](https://hahow.in/courses/5b3cdd6ed03140001eebeadc)
+- [CryptoZombies](https://cryptozombies.io/)
   
-上完線上述課程後，請做完 [CryptoZombies](https://cryptozombies.io/)，以上也做完後，可以算是對 Solidity 有基本的了解以及實作能力了
+####  備註：
+- 區塊鏈技術演進快速，線上資源大概率會有過時的內容，但基礎概念不會變，在實作細節上要特別注意。
 
-## What you've learn
-預期上述課程完成後，應該要能夠清楚的回答以下問題：
+<br/>
+
+## What you'll learn
+上述資源完成後，應該要能夠清楚的回答以下問題：
 1. 什麼是合約（smart contract）？
-2. etc
+2. 什麼是 POW（proof of work）？
+3. 挖礦的流程為何？
+4. 交易的流程為何？
+5. 公鑰＆私鑰的基本加密原理？
+6. 冷錢包和熱錢包的差異？
+7. 為何發起一筆交易需要 gas fee？
+8. 如何使用 Solidity 線上 IDE：[Remix](https://remix.ethereum.org/)？
+9. 如何部署一個合約？
+10. Solidity 語法的基礎？
+11. 如何在 Etherscan 上看到自己部署的合約？
 
 ## Next steps
 
-- 學習 Hardhat Fork 功能
+1. ### 學習 Hardhat Fork 功能
   
-  接下來有些開發可能不好仰賴 Remix 了，需要在本機架構自己的開發環境，所以在進入下一階段前，請學習使用 [Hardhat](https://hardhat.org/)，接下來的作業都請盡量使用 Hardhat 不要再用 Remix
+    Remix 是相當適合初學者使用的 IDE，但對於複雜的合約應用，或是要引入 library 進行開發，便顯得過於簡陋。為了進行後續的實作練習，需要在本機架構自己的開發環境。
+  
+    請參閱並學習使用 [Hardhat](https://hardhat.org/) 框架，以利後續的學習進行。特別注意如何使用 Hardhat 進行 mainnet fork / testnet fork 的功能。
 
-- 學習怎麼在 local 跑 [Ethernaut](https://github.com/OpenZeppelin/ethernaut)
+2. ### 在 local 執行 [Ethernaut](https://github.com/OpenZeppelin/ethernaut)
   
-  在 2022 Q2, Q3 時會有一個 Ethereum 升級（[gray galcier](https://blog.ethereum.org/2022/06/16/gray-glacier-announcement/)），原有的 Rinkeby, Kovan 等 testnet 將不會被 Ethereum foundation 的開發團隊持續維護（未來也許是靠社群力量維護）。原本依靠 Rinkeby testnet 的 Ethernaut 可能會無法使用，因此要學習如何在 local 跑 Ethernaut 來練習。
+    在 2022 Q2, Q3 時會有一個 Ethereum 升級（[gray glacier](https://blog.ethereum.org/2022/06/16/gray-glacier-announcement/)），原有的 Rinkeby, Kovan 等 testnet 將不會被 Ethereum foundation 的開發團隊持續維護（未來也許是靠社群力量維護）。原本依靠 Rinkeby testnet 的 Ethernaut 可能會無法使用，因此要學習如何在 local 跑 Ethernaut 來練習。
 
 
 ---
