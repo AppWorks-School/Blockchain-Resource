@@ -6,6 +6,8 @@
 ## 先備知識
 
 ## 參考資料
+[此地無人生還：區塊鏈隨機數的原罪與救贖](https://kknews.cc/zh-tw/tech/q6x83qy.html)
+[Introduction to Chainlink VRF](https://docs.chain.link/docs/chainlink-vrf/)
 
 ---
 [回階段二](./README.md)

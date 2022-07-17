@@ -6,6 +6,8 @@
 ## 先備知識
 
 ## 參考資料
+[Using Merkle Trees for NFT Whitelists](https://medium.com/@ItsCuzzo/using-merkle-trees-for-nft-whitelists-523b58ada3f9)
+[Solidity合约中Merkle Root验证的一点实践](https://blog.csdn.net/Alex_Jeram/article/details/123025438)
 
 ---
 [回階段二](./README.md)
