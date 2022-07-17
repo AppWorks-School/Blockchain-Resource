@@ -10,5 +10,10 @@
 4. strategy 要可以賺取收益，可以先用自己轉錢進去的方式假裝有在賺錢
 3. 當 strategy 有收益或虧損， vault 要可以正確反應資產價值
 
+
+## 參考資料
+[What is yearn.finance? (YFI)](https://www.kraken.com/learn/what-is-yearn-finance-yfi)
+
+
 ---
 [回階段三](./README.md)
