@@ -1,7 +1,7 @@
 # internal transaction
 
 ## 說明：
-請研究什麼是 internal transaction? 如何查詢 internal transaction 的資料?
+請研究什麼是 internal transaction？如何查詢 internal transaction 的資料？
 
 ## 先備知識
 
