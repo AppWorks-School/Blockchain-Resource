@@ -6,9 +6,9 @@
 
 
 ## 參考資料
-[What is a Re-Entrancy Attack?](https://quantstamp.com/blog/what-is-a-re-entrancy-attack)
+- [What is a Re-Entrancy Attack?](https://quantstamp.com/blog/what-is-a-re-entrancy-attack)
 
-[弯道超车老司机戏耍智能合约 | 成都链安漏洞分析连载第三期 —— 竞态条件漏洞](https://mp.weixin.qq.com/s/WWouXpxoejY_2oRs9TS38Q)
+- [弯道超车老司机戏耍智能合约 | 成都链安漏洞分析连载第三期 —— 竞态条件漏洞](https://mp.weixin.qq.com/s/WWouXpxoejY_2oRs9TS38Q)
 
 
 ---

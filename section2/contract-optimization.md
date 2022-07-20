@@ -6,11 +6,11 @@
 
 
 ## 參考資料
-[Solidity Bytecode and Opcode Basics](https://medium.com/@blockchain101/solidity-bytecode-and-opcode-basics-672e9b1a88c2)
+- [Solidity Bytecode and Opcode Basics](https://medium.com/@blockchain101/solidity-bytecode-and-opcode-basics-672e9b1a88c2)
 
-[Ethereum VM (EVM) Opcodes and Instruction Reference](https://github.com/crytic/evm-opcodes)
+- [Ethereum VM (EVM) Opcodes and Instruction Reference](https://github.com/crytic/evm-opcodes)
 
-[How to reduce Gas cost in Smart contract?](https://vishwasbanand.medium.com/how-to-reduce-gas-cost-in-smart-contract-9563a573be00)
+- [How to reduce Gas cost in Smart contract?](https://vishwasbanand.medium.com/how-to-reduce-gas-cost-in-smart-contract-9563a573be00)
 
 
 ---
