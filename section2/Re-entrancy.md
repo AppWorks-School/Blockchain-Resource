@@ -3,7 +3,7 @@
 ## 說明：
 請解釋重入攻擊（Re-entrancy Attack），並實作 Ethernaut - 10 Re-entrancy
 
-## 先備知識
+
 
 ## 參考資料
 [What is a Re-Entrancy Attack?](https://quantstamp.com/blog/what-is-a-re-entrancy-attack)

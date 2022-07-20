@@ -3,7 +3,7 @@
 ## 說明
 請實作一個運算用的合約，可以處理 uint256 的加減乘除，並且在溢位時進行 revert，實作完後，查詢並理解最佳實踐為何? 
 
-## 先備知識
+
 
 ## 參考資料
 [Utilities - OpenZeppelin Docs](https://docs.openzeppelin.com/contracts/4.x/api/utils)
