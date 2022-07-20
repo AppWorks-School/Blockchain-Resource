@@ -1,6 +1,6 @@
 <h1 align="center">區塊鏈自學資源彙整</h1>
 <p align="center">
-  <img src="./appworks_school_L-550x279.png">
+  <a href="https://school.appworks.tw/"><img src="./appworks_school_L-550x279.png"></a>
 </p>
 
 <p align="center">
