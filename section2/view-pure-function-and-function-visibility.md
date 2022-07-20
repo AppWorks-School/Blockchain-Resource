@@ -9,10 +9,10 @@ getAccountBalance(address _account) public returns (uint256) {
 }
 ```
 
-## 先備知識
+
 
 ## 參考資料
-[Solidity Visibility Modifiers ](https://blog.oliverjumpertz.dev/solidity-visibility-modifiers)
+- [Solidity Visibility Modifiers ](https://blog.oliverjumpertz.dev/solidity-visibility-modifiers)
 
 
 ---

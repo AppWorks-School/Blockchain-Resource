@@ -5,8 +5,6 @@
 
 請問為何要先 approve 才能 transfer？有沒有什麼新作法能夠達到 approve 的效果，又可以不用把 approve 跟 transfer 分成兩筆交易，只要一筆交易就能達成目的？
 
-## 先備知識
-
 ## 參考資料
 
 ---
