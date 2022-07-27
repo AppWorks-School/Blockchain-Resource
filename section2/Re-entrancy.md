@@ -1,8 +1,7 @@
 # 重入攻擊（Re-entrancy）
 
 ## 說明：
-請解釋重入攻擊（Re-entrancy Attack），並實作 Ethernaut - 10 Re-entrancy
-
+請解釋重入攻擊（Re-entrancy Attack），提出防止重入攻擊的最佳實踐以及手段，並實作 Ethernaut - 10 Re-entrancy。
 
 
 ## 參考資料
