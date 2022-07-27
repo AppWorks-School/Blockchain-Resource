@@ -1,14 +1,18 @@
 # 自動化做市商（Automated Market Maker, AMM）
 
 
-請先理解什麼是 AMM（[Uniswap V2](https://docs.uniswap.org/protocol/V2/introduction)），並實作一個簡單的 AMM 可以做到以下三件事，不需要收 fee
-1. 增加流動性
-2. 移除流動性
-3. 換幣
+請先理解什麼是 AMM（[Uniswap V2](https://docs.uniswap.org/protocol/V2/introduction)），並實作一個簡單的 AMM 並且在不考慮手續費的情況下可以做到以下三件事：
+1. 添加交易對流動性
+2. 移除交易對流動性
+3. 換幣（Swap）
 
 進階題:
-1. 看 [Uniswap V3](https://docs.uniswap.org/protocol/introduction)
-2. 看 [Curve](https://curve.readthedocs.io/)
+- 在實作的 AMM 中加上手續費的機制，對於每一筆換幣交易收取 0.3% 的手續費（使用 X 代幣購買 Y 代幣時收取 0.3% 的 X 代幣），
+  並確保該交易對中的流動性提供者可以根據提供流動性的比例均分手續費
+
+- 學習 [Uniswap V3](https://docs.uniswap.org/protocol/introduction)
+
+- 學習 [Curve](https://curve.readthedocs.io/)
 
 ## 參考資料
 - [What Is an Automated Market Maker?](https://www.coindesk.com/learn/2021/08/20/what-is-an-automated-market-maker/)
