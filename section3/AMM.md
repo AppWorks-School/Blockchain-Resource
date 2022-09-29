@@ -2,11 +2,11 @@
 
 
 請先理解什麼是 AMM（[Uniswap V2](https://docs.uniswap.org/protocol/V2/introduction)），並依照下面順序實作一個簡單的 AMM 
-1. 實作一個 AMM 合約，內有一個 init(uint256 _amount)，會收取用戶 _amount 這麼多金額的 USDC 和 USDT，並發給用戶 1e18 數量的 LP token
+1. 實作一個 AMM 合約，繼承 ERC20 並實作一個 `init(uint256 _amount)`，會收取用戶 _amount 這麼多金額的 USDC 和 USDT，並發給用戶 1e18 數量的 ERC20 token(Liquidity Provider Token, LP token)
 
-2. 實作一個 AMM 合約，可以 `swap(address _tokenIn, address _tokenOut, uint256 _amount)` 把 USDC/USDT 互換
+2. 實作一個 `swap(address _tokenIn, address _tokenOut, uint256 _amount)` 把 USDC/USDT 互換，互換比例(價格)隨意
 
-3. 實作一個 `provideLiquidity(addrerss _tokenIn, uint256 _amount)` 可以把 USDC/USDT 存進去
+3. 實作一個 `provideLiquidity(addrerss _tokenIn, uint256 _amount)` 可以把 USDC 或 USDT 存進去
 
 4. 實作一個 `_calculateSwapOutAmount(address _tokenIn, address _tokenOut, uint256 _amountIn) returns (uint256 amountOut)`，並把他使用在 swap 內，並滿足兩個條件 
 (1) _amountIn 越高， amountOut 越高，但 _amountIn / amountOut 比值(價格)要越高，例如 10 USDC 可以換 10 USDT，但 20 USDC 只能換 18 USDT
