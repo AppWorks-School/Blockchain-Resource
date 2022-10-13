@@ -2,8 +2,15 @@
 
 ## 目的：理解區塊鏈的借貸協議怎麼做，以及閃電貸怎麼使用
 請賞析 [Compound](https://compound.finance/docs) 的合約，並依序實作以下
-1. 部署一個 CEther 跟一個以 USDC 為底的 CErc20，以及一個 Comptroller，Comptroller 需要的參數以及 oracle 等等合約可以隨便設，跑得起來就好
-2. 用 user1 mint/redeem CEther, user2 mint/redeem CUsdc
+1. 部署一個 CEther(`CEther.sol`)，一個 CErc20(`CErc20Delegate.sol`)，一個 Comptroller(`Comptroller.sol`) 以及合約初始化時相關必要合約，請遵循以下細節：
+    * CToken 的 decimals 皆為 18
+    * 需部署一個 CErc20 的 underlying ERC20 token，decimals 為 18
+    * 使用 `SimplePriceOracle` 作為 Oracle
+    * 使用一個利率為 0% 的利率模型合約
+    * 初始 exchangeRate 為 1:1
+2. 用 user1 mint/redeem CEther, user2 mint/redeem CErc20
+    * user1 使用 100 Ether 去 mint 出 100 CEther token，再用 100 CEther token redeem 回 100 Ether
+    * user2 使用 100 顆（100 * 10^18） ERC20 去 mint 出 100 CErc20 token，再用 100 CEther token redeem 回 100 顆 ERC20 
 3. 讓 user1 可以借出 CUsdc，並分別在兩種情況下進行清算
 4. 調整 ETH 的 collateral factor，讓 user 1 遭到清算
 5. 調整 oracle 的 ETH 價格，讓 user1 遭到清算
