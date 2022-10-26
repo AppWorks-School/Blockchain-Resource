@@ -10,7 +10,7 @@
     * 初始 exchangeRate 為 1:1
     * 進階(Optional)： 使用 Compound 的 Proxy 合約（`CErc20Delegator.sol` and `Unitroller.sol`)
 2. 讓 user1 mint/redeem CErc20，請透過 Hardhat test case 實現以下場景
-    * User1 使用 100 顆（100 * 10^18） ERC20 去 mint 出 100 CErc20 token，再用 100 CEther token redeem 回 100 顆 ERC20 
+    * User1 使用 100 顆（100 * 10^18） ERC20 去 mint 出 100 CErc20 token，再用 100 CErc20 token redeem 回 100 顆 ERC20 
 3. 讓 user1 borrow/repay
     * 延續上題，部署另一份 CErc20 合約
     * 在 Oracle 中設定一顆 token A 的價格為 $1，一顆 token B 的價格為 $100
