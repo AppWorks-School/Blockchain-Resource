@@ -14,7 +14,7 @@
 3. 讓 user1 borrow/repay
     * 延續上題，部署另一份 CErc20 合約
     * 在 Oracle 中設定一顆 token A 的價格為 $1，一顆 token B 的價格為 $100
-    * Token A 的 collateral factor 為 50%
+    * Token B 的 collateral factor 為 50%
     * User1 使用 1 顆 token B 來 mint cToken
     * User1 使用 token B 作為抵押品來借出 50 顆 token A
 4. 延續 (3.) 的借貸場景，調整 token A 的 collateral factor，讓 user1 被 user2 清算
