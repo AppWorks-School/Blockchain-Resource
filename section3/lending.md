@@ -24,7 +24,7 @@
     * 使用 USDC 以及 UNI 代幣來作為 token A 以及 Token B
     * 在 Oracle 中設定 USDC 的價格為 $1，UNI 的價格為 $10
     * 設定 UNI 的 collateral factor 為 50%
-    * User1 使用 1000 顆 UNI 作為抵押品借出 500 顆 USDC
+    * User1 使用 1000 顆 UNI 作為抵押品借出 5000 顆 USDC
     * 將 UNI 價格改為 $6.2 使 User1 產生 Shortfall，並讓 User2 透過 AAVE 的 Flash loan 來清算 User1
     * 在合約中如需將 UNI 換成 USDC 可以使用以下程式碼片段：
     ```javascript
