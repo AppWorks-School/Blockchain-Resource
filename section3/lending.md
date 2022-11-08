@@ -22,6 +22,7 @@
 6. 請使用 Hardhat 的 fork 模式撰寫測試，並使用 AAVE 的 Flash loan 來清算 user1，請遵循以下細節：
     * Fork Ethereum mainnet at block 15815693 ([Reference](https://hardhat.org/hardhat-network/docs/guides/forking-other-networks#resetting-the-fork))
     * cToken 的 decimals 皆為 18，初始 exchangeRate 為 1:1
+    * Liquidation incentive 設為 10%（1.1 * 1e18)
     * 使用 USDC 以及 UNI 代幣來作為 token A 以及 Token B
     * 在 Oracle 中設定 USDC 的價格為 $1，UNI 的價格為 $10
     * 設定 UNI 的 collateral factor 為 50%
