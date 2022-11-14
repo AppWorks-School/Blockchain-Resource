@@ -7,7 +7,7 @@
 [Ethernaut](https://ethernaut.openzeppelin.com/) 需至少完成 15 ~ 20 題，以確保對區塊鏈的熟悉程度以及安全意識。
 
 ## 應用實作練習：
-### [借貸協議與閃電貸（Flash Loan）](./flash-loan.md)
+### [借貸協議與閃電貸（Flash Loan）](./lending.md)
 ### [自動化做市商（Automated Market Maker, AMM）](./AMM.md)
 ### [聚合器（Aggregator）](./aggregator.md)
 
