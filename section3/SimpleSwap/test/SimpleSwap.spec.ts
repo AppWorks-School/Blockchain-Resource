@@ -321,6 +321,10 @@ describe("SimpleSwap Spec", () => {
                 .to.changeTokenBalances(tokenB, [taker, simpleSwap], [amountOut, amountOut.mul(-1)])
                 .emit(simpleSwap, "Swap")
                 .withArgs(taker.address, tokenIn, tokenOut, amountIn, amountOut)
+
+            const [reserveA, reserveB] = await simpleSwap.getReserves()
+            expect(reserveA).to.equal(parseUnits("200", tokenADecimals));
+            expect(reserveB).to.equal(parseUnits("50", tokenBDecimals));
         })
 
         it("should be able to swap from tokenB to tokenA", async () => {
@@ -334,6 +338,10 @@ describe("SimpleSwap Spec", () => {
                 .to.changeTokenBalances(tokenB, [taker, simpleSwap], [amountIn.mul(-1), amountIn])
                 .emit(simpleSwap, "Swap")
                 .withArgs(taker.address, tokenIn, tokenOut, amountIn, amountOut)
+
+            const [reserveA, reserveB] = await simpleSwap.getReserves()
+            expect(reserveA).to.equal(parseUnits("50", tokenADecimals));
+            expect(reserveB).to.equal(parseUnits("200", tokenBDecimals));
         })
     })
 
@@ -394,7 +402,7 @@ describe("SimpleSwap Spec", () => {
             expect(reserveB).to.eq(0)
         })
 
-        it("should be able to get reserves after add liquidity", async () => {
+        it("should update reserves after add liquidity", async () => {
             const amountA = parseUnits("100", tokenADecimals)
             const amountB = parseUnits("100", tokenBDecimals)
             await simpleSwap.connect(maker).addLiquidity(amountA, amountB)
