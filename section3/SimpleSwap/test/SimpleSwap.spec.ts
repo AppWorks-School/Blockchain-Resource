@@ -411,6 +411,25 @@ describe("SimpleSwap Spec", () => {
             expect(reserveA).to.eq(amountA)
             expect(reserveB).to.eq(amountB)
         })
+
+        describe("when there is already some liquidity", async () => {
+          beforeEach(async () => {
+            const amountA = parseUnits("100", tokenADecimals)
+            const amountB = parseUnits("100", tokenBDecimals)
+            await simpleSwap.connect(maker).addLiquidity(amountA, amountB)
+          });
+
+          it("should update reserves after remove liquidity", async () => {
+              await simpleSwap.connect(maker).approve(simpleSwap.address, parseUnits("100", slpDecimals))
+              await simpleSwap.connect(maker).removeLiquidity(parseUnits("100", slpDecimals))
+
+              const [reserveA, reserveB] = await simpleSwap.getReserves()
+              expect(reserveA).to.eq(0)
+              expect(reserveB).to.eq(0)
+          })
+          
+        });
+
     })
 
     describe("# getTokenA", () => {
