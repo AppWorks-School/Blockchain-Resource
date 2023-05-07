@@ -12,5 +12,6 @@ contracts/hardhat-dependency-compiler/*
 .openzeppelin/unknown-31337.json
 .env*
 forge-cache/
+cache_forge/
 out/
 typechain-types
