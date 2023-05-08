@@ -1,8 +1,5 @@
 import "@nomicfoundation/hardhat-toolbox"
-// import "hardhat-dependency-compiler"
 import { HardhatUserConfig } from "hardhat/config"
-import "solidity-coverage"
-import "@nomicfoundation/hardhat-foundry"
 
 const config: HardhatUserConfig = {
     solidity: {
