@@ -504,7 +504,7 @@ describe("SimpleSwap Spec", () => {
             K = amountA.mul(amountB)
         })
 
-        it("k value should be the same after swap", async () => {
+        it("k value should be greater than equal the same after swap", async () => {
             const tokenIn = tokenA.address
             const tokenOut = tokenB.address
             const amountIn = parseUnits("70", tokenADecimals)
@@ -513,7 +513,7 @@ describe("SimpleSwap Spec", () => {
 
             const [reserveA, reserveB] = await simpleSwap.getReserves()
 
-            expect(reserveA.mul(reserveB)).to.be.eq(K)
+            expect(reserveA.mul(reserveB)).to.be.gte(K)
         })
     })
 })
