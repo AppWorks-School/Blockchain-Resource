@@ -32,6 +32,11 @@ contract UniswapV2PracticeTest is Test {
 
         // mint 1 ETH to taker
         deal(taker, 100 ether);
+
+        vm.label(address(UNISWAP_V2_ROUTER), "UNISWAP_V2_ROUTER");
+        vm.label(address(UNISWAP_V2_FACTORY), "UNISWAP_V2_FACTORY");
+        vm.label(address(WETH9), "WETH9");
+        vm.label(address(testUSDC), "TestUSDC");
     }
 
     // #Practice1: create a pair for ETH, TestUSDC
