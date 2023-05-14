@@ -1,0 +1,8 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+
+rpc_endpoints = {mainnet = MAINNET_RPC_ENDPOINT}
+
+# See more config options https://github.com/foundry-rs/foundry/tree/master/config
