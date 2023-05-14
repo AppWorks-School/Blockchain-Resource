@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import { fixture } from "./utils.sol";
+import { SimpleSwapSetUp } from "./helper/SimpleSwapSetUp.sol";
 import { Math } from "@openzeppelin/contracts/utils/math/Math.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract GetterTest is fixture {
+contract SimplwSwapGetterTest is SimpleSwapSetUp {
   function setUp() public override {
     super.setUp();
   }
@@ -41,7 +41,7 @@ contract GetterTest is fixture {
   }
 }
 
-contract lpTokenTest is fixture {
+contract SimpleSwapLpTokenTest is SimpleSwapSetUp {
 
   event Transfer(address indexed from, address indexed to, uint256 value);
   event Approval(address indexed owner, address indexed spender, uint256 value);
@@ -101,7 +101,7 @@ contract lpTokenTest is fixture {
   }
 }
 
-contract KValueCheck is fixture {
+contract SimpleSwapKValueCheck is SimpleSwapSetUp {
 
   uint256 K;
 
