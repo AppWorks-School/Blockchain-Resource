@@ -2,9 +2,9 @@
 pragma solidity 0.8.17;
 
 import { Math } from "@openzeppelin/contracts/utils/math/Math.sol";
-import { fixture } from "./utils.sol";
+import { SimpleSwapSetUp } from "./helper/SimpleSwapSetUp.sol";
 
-contract addLiquidityTest is fixture {
+contract SimpleSwapAddLiquidityTest is SimpleSwapSetUp {
 
   function setUp() public override {
     super.setUp();
@@ -49,7 +49,7 @@ contract addLiquidityTest is fixture {
   }
 }
 
-contract AddLiquidityAfterInitial is fixture {
+contract SimpleSwapAddLiquidityAfterInitial is SimpleSwapSetUp {
 
   uint256 reserveAAfterFirstAddLiquidity;
   uint256 reserveBAfterFirstAddLiquidity;
@@ -209,7 +209,7 @@ contract AddLiquidityAfterInitial is fixture {
   }
 }
 
-contract removeLiquidity is fixture {
+contract SimpleSwapRemoveLiquidity is SimpleSwapSetUp {
 
   function setUp() public override {
     super.setUp();

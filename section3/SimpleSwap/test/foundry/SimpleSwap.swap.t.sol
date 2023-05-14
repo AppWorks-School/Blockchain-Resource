@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import { fixture } from "./utils.sol";
+import { SimpleSwapSetUp } from "./helper/SimpleSwapSetUp.sol";
 
-contract SwapTest is fixture {
+contract SimpleSwapSwapTest is SimpleSwapSetUp {
 
   function setUp() public override {
     super.setUp();
