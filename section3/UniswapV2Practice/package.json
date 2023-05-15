@@ -1,0 +1,30 @@
+{
+  "name": "@appworks-school/uniswap-v2-practice",
+  "version": "1.0.0",
+  "description": "Appworks school uniswap v2 practice",
+  "scripts": {
+    "build": "forge build",
+    "test": "forge test"
+  },
+  "engines": {
+    "node": ">=16",
+    "npm": ">=7"
+},
+  "license": "MIT",
+  "devDependencies": {
+    "eslint-config-prettier": "8.5.0",
+    "hardhat": "2.14.0",
+    "lint-staged": "11.0.0",
+    "prettier": "2.3.0",
+    "prettier-plugin-solidity": "1.0.0-rc.1"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write"
+    ],
+    "*.sol": [
+      "prettier --write",
+      "solhint"
+    ]
+  }
+}
