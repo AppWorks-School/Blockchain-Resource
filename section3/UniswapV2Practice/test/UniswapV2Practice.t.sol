@@ -33,22 +33,16 @@ contract UniswapV2PracticeTest is Test {
         // mint 1 ETH to taker
         deal(taker, 100 ether);
 
+        // create ETH/USDC pair
+        WETHTestUSDCPair = IUniswapV2Pair(UNISWAP_V2_FACTORY.createPair(address(WETH9), address(testUSDC)));
+
         vm.label(address(UNISWAP_V2_ROUTER), "UNISWAP_V2_ROUTER");
         vm.label(address(UNISWAP_V2_FACTORY), "UNISWAP_V2_FACTORY");
         vm.label(address(WETH9), "WETH9");
         vm.label(address(testUSDC), "TestUSDC");
     }
 
-    // #Practice1: create a pair for ETH, TestUSDC
-    function test_maker_create_pair() public {
-        // Implement here
-
-        // Checking
-        assertEq(WETHTestUSDCPair.token0(), address(testUSDC));
-        assertEq(WETHTestUSDCPair.token1(), address(WETH9));
-    }
-
-    // #Practice2: maker add liquidity (100 ETH, 10000 USDC)
+    // # Practice 1: maker add liquidity (100 ETH, 10000 USDC)
     function test_maker_addLiquidityETH() public {
         // Implement here
 
@@ -59,27 +53,27 @@ contract UniswapV2PracticeTest is Test {
         assertEq(reserve1, 100 ether);
     }
 
-    // #Practice3: taker swap exact 1 ETH for testUSDC
+    // # Practice 2: taker swap exact 1 ETH for testUSDC
     function test_taker_swapExactETHForTokens() public {
         // Impelement here
 
         // Checking
-        // #Practice4: discuss why 4992488733 ?
+        // # Disscussion 1: discuss why 4992488733 ?
         assertEq(testUSDC.balanceOf(taker), 4992488733);
         assertEq(taker.balance, 0);
     }
 
-    // #Practice5: taker swap exact 10000 USDC for ETH
+    // # Practice 3: taker swap exact 10000 USDC for ETH
     function test_taker_swapExactTokensForETH() public {
         // Impelement here
 
         // Checking
-        // #Practice6: original balance is 100 ether, so delta is 49924887330996494742, but why 49924887330996494742 ?
+        // # Disscussion 2: original balance is 100 ether, so delta is 49924887330996494742, but why 49924887330996494742 ?
         assertEq(testUSDC.balanceOf(taker), 0);
         assertEq(taker.balance, 149924887330996494742);
     }
 
-    // #Practice7: maker remove all liquidity
+    // # Practice 4: maker remove all liquidity
     function test_taker_removeLiquidityETH() public {
         // Implement here
 

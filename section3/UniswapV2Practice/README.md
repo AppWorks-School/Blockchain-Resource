@@ -1,5 +1,5 @@
 # UniswapV2Practice
-We have 7 practices in `UniswapV2Practice.t.sol`, follow the instructions in the comments to complete the practice.
+We have 4 practices and 2 discussions in `UniswapV2Practice`.t.sol`, follow the instructions in the comments to pass the test.
 
 Reference:
 - UniswapV2-core: https://github.com/Uniswap/v2-core
