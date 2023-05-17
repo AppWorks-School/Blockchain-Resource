@@ -53,7 +53,7 @@ contract UniswapV2PracticeTest is Test {
         assertEq(reserve1, 100 ether);
     }
 
-    // # Practice 2: taker swap exact 1 ETH for testUSDC
+    // # Practice 2: taker swap exact 100 ETH for testUSDC
     function test_taker_swapExactETHForTokens() public {
         // Impelement here
 
@@ -74,7 +74,7 @@ contract UniswapV2PracticeTest is Test {
     }
 
     // # Practice 4: maker remove all liquidity
-    function test_taker_removeLiquidityETH() public {
+    function test_maker_removeLiquidityETH() public {
         // Implement here
 
         // Checking

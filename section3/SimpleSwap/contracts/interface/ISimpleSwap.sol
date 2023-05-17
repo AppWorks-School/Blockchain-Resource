@@ -34,11 +34,7 @@ interface ISimpleSwap is ISimpleSwapEvent {
     /// @param tokenOut The address of the token to swap to
     /// @param amountIn The amount of tokenIn to swap
     /// @return amountOut The amount of tokenOut received
-    function swap(
-        address tokenIn,
-        address tokenOut,
-        uint256 amountIn
-    ) external returns (uint256 amountOut);
+    function swap(address tokenIn, address tokenOut, uint256 amountIn) external returns (uint256 amountOut);
 
     /// @notice Add liquidity to the pool
     /// @param amountAIn The amount of tokenA to add
@@ -46,13 +42,10 @@ interface ISimpleSwap is ISimpleSwapEvent {
     /// @return amountA The actually amount of tokenA added
     /// @return amountB The actually amount of tokenB added
     /// @return liquidity The amount of liquidity minted
-    function addLiquidity(uint256 amountAIn, uint256 amountBIn)
-        external
-        returns (
-            uint256 amountA,
-            uint256 amountB,
-            uint256 liquidity
-        );
+    function addLiquidity(
+        uint256 amountAIn,
+        uint256 amountBIn
+    ) external returns (uint256 amountA, uint256 amountB, uint256 liquidity);
 
     /// @notice Remove liquidity from the pool
     /// @param liquidity The amount of liquidity to remove
