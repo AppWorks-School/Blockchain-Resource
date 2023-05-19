@@ -26,6 +26,7 @@ contract SimpleSwapSetUp is Test, ISimpleSwapEvent {
         tokenADecimals = tokenA.decimals();
         tokenBDecimals = tokenB.decimals();
         simpleSwap = new SimpleSwap(address(tokenA), address(tokenB));
+        slpDecimals = simpleSwap.decimals();
 
         tokenA.mint(taker, 1000 * 10 ** tokenADecimals);
         tokenA.mint(maker, 1000 * 10 ** tokenADecimals);

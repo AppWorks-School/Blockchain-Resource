@@ -56,8 +56,8 @@ contract SimpleSwapLpTokenTest is SimpleSwapSetUp {
     }
 
     function test_lpToken_should_be_able_to_get_lpToken_after_adding_liquidity() public {
-        uint256 amountA = 100 * 10 * tokenADecimals;
-        uint256 amountB = 100 * 10 * tokenBDecimals;
+        uint256 amountA = 100 * 10 ** tokenADecimals;
+        uint256 amountB = 100 * 10 ** tokenBDecimals;
         uint256 liquidity = Math.sqrt(amountA * amountB);
 
         uint256 makerBalance = simpleSwap.balanceOf(maker);
