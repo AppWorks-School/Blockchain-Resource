@@ -8,7 +8,7 @@ import { IUniswapV2Router01 } from "v2-periphery/interfaces/IUniswapV2Router01.s
 import { TestWETH9 } from "../../contracts/test/TestWETH9.sol";
 import { TestERC20 } from "../../contracts/test/TestERC20.sol";
 
-contract SandwichSetUp is Test {
+contract FlashSwapSetUp is Test {
     TestWETH9 public weth;
     TestERC20 public usdc;
     IUniswapV2Factory public uniswapV2Factory;
