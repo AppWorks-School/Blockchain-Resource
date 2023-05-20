@@ -15,3 +15,5 @@ forge-cache/
 cache_forge/
 out/
 typechain-types
+
+*.ans.*
