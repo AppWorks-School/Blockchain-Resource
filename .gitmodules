@@ -22,12 +22,12 @@
 [submodule "section3/SandwichPractice/lib/v2-core"]
 	path = section3/SandwichPractice/lib/v2-core
 	url = https://github.com/Uniswap/v2-core
-[submodule "section3/ArbitragePractice/lib/forge-std"]
-	path = section3/ArbitragePractice/lib/forge-std
+[submodule "section3/FlashSwapPractice/lib/forge-std"]
+	path = section3/FlashSwapPractice/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
-[submodule "section3/ArbitragePractice/lib/v2-core"]
-	path = section3/ArbitragePractice/lib/v2-core
+[submodule "section3/FlashSwapPractice/lib/v2-core"]
+	path = section3/FlashSwapPractice/lib/v2-core
 	url = https://github.com/Uniswap/v2-core
-[submodule "section3/ArbitragePractice/lib/v2-periphery"]
-	path = section3/ArbitragePractice/lib/v2-periphery
+[submodule "section3/FlashSwapPractice/lib/v2-periphery"]
+	path = section3/FlashSwapPractice/lib/v2-periphery
 	url = https://github.com/Uniswap/v2-periphery
