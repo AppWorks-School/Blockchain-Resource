@@ -16,7 +16,7 @@ contract FakeLendingProtocol {
 
     // Let's assume liquidate position can use 80 USDC to liquidate 1 ETH position
     // ETH origianl price is 100 USDC, discount 20%
-    function liquidatePotision() external {
+    function liquidatePosition() external {
         bool success = IERC20(_USDC).transferFrom(msg.sender, address(this), 80 * 10 ** 6);
         require(success, "Transfer USDC failed");
 
