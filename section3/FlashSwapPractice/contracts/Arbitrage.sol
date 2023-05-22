@@ -57,7 +57,8 @@ contract Arbitrage is IUniswapV2Callee, Ownable {
         // 1. finish callbackData
         // 2. flash swap (borrow WETH from lower price pool)
 
-        IUniswapV2Pair(priceLowerPool).swap(borrowETH, 0, address(this), abi.encode(callbackData));
+        // Uncomment next line when you do the homework
+        // IUniswapV2Pair(priceLowerPool).swap(borrowETH, 0, address(this), abi.encode(callbackData));
     }
 
     //
