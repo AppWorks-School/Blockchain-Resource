@@ -69,7 +69,7 @@ contract Liquidator is IUniswapV2Callee, Ownable {
         require(amountOut > 0, "AmountOut must be greater than 0");
         // 1. get uniswap pool address
         // 2. calculate repay amount
-        // 3. falsh swap from uniswap pool
+        // 3. flash swap from uniswap pool
     }
 
     receive() external payable {}
