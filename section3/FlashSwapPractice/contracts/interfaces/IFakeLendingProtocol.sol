@@ -2,5 +2,5 @@
 pragma solidity 0.8.17;
 
 interface IFakeLendingProtocol {
-    function liquidatePotision() external;
+    function liquidatePosition() external;
 }
