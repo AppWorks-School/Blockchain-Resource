@@ -12,19 +12,28 @@ contract FlashSwapSetUp is Test {
     TestWETH9 public weth;
     TestERC20 public usdc;
     IUniswapV2Factory public uniswapV2Factory;
+    IUniswapV2Factory public sushiSwapV2Factory;
     IUniswapV2Router01 public uniswapV2Router;
+    IUniswapV2Router01 public sushiSwapV2Router;
     IUniswapV2Pair public wethUsdcPool;
+    IUniswapV2Pair public wethUsdcSushiPool;
 
     function setUp() public virtual {
         usdc = _create_erc20("USD Coin", "USDC", 6);
         weth = _create_weth9();
         uniswapV2Factory = _create_uniswap_v2_factory();
+        sushiSwapV2Factory = _create_uniswap_v2_factory();
         uniswapV2Router = _create_uniswap_v2_router(address(uniswapV2Factory), address(weth));
+        sushiSwapV2Router = _create_uniswap_v2_router(address(sushiSwapV2Factory), address(weth));
         wethUsdcPool = _create_pool(address(uniswapV2Factory), address(weth), address(usdc));
+        wethUsdcSushiPool = _create_pool(address(sushiSwapV2Factory), address(weth), address(usdc));
 
         vm.label(address(uniswapV2Factory), "UniswapV2Factory");
+        vm.label(address(sushiSwapV2Factory), "SushiSwapV2Factory");
         vm.label(address(uniswapV2Router), "UniswapV2Router");
+        vm.label(address(sushiSwapV2Router), "SushiSwapV2Router");
         vm.label(address(wethUsdcPool), "WethUsdcPool");
+        vm.label(address(wethUsdcSushiPool), "WethUsdcSushiPool");
         vm.label(address(weth), "WETH9");
         vm.label(address(usdc), "USDC");
     }

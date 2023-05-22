@@ -10,7 +10,7 @@ contract FakeLendingProtocol {
     address internal immutable _USDC;
 
     constructor(address usdc) payable {
-        require(msg.value == 1 ether, "Initial value must be 10 ether");
+        require(msg.value == 1 ether, "Initial value must be 1 ether");
         _USDC = usdc;
     }
 

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import "forge-std/Test.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { IUniswapV2Pair } from "v2-core/interfaces/IUniswapV2Pair.sol";
@@ -18,7 +17,7 @@ contract Liquidator is IUniswapV2Callee, Ownable {
     struct CallbackData {
         address tokenIn;
         address tokenOut;
-        uint256 amountIn; 
+        uint256 amountIn;
         uint256 amountOut;
     }
 
@@ -35,6 +34,23 @@ contract Liquidator is IUniswapV2Callee, Ownable {
         _WETH9 = IUniswapV2Router01(uniswapRouter).WETH();
     }
 
+    //
+    // EXTERNAL NON-VIEW ONLY OWNER
+    //
+
+    function withdraw() external onlyOwner {
+        (bool success, ) = msg.sender.call{ value: address(this).balance }("");
+        require(success, "Withdraw failed");
+    }
+
+    function withdrawTokens(address token, uint256 amount) external onlyOwner {
+        require(IERC20(token).transfer(msg.sender, amount), "Withdraw failed");
+    }
+
+    //
+    // EXTERNAL NON-VIEW
+    //
+
     function uniswapV2Call(address sender, uint256 amount0, uint256 amount1, bytes calldata data) external override {
         require(sender == address(this), "Sender must be this contract");
         require(amount0 > 0 || amount1 > 0, "amount0 or amount1 must be greater than 0");
@@ -45,7 +61,7 @@ contract Liquidator is IUniswapV2Callee, Ownable {
         // 7. repay WETH to uniswap pool
 
         // check profit
-        require(address(this).balance >= _MINIMUM_PROFIT, "Profit must be greater than 0");
+        require(address(this).balance >= _MINIMUM_PROFIT, "Profit must be greater than 0.01 ether");
     }
 
     // we use single hop path for testing
@@ -54,11 +70,6 @@ contract Liquidator is IUniswapV2Callee, Ownable {
         // 1. get uniswap pool address
         // 2. calculate repay amount
         // 3. falsh swap from uniswap pool
-    }
-
-    function withdraw() external onlyOwner {
-        (bool success, ) = msg.sender.call{ value: address(this).balance }("");
-        require(success, "Withdraw failed");
     }
 
     receive() external payable {}
