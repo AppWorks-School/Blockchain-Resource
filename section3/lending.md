@@ -2,7 +2,7 @@
 
 ## 目的：理解區塊鏈的借貸協議怎麼做，以及閃電貸怎麼使用
 請賞析 [Compound](https://docs.compound.finance/v2/) 的合約，並依序實作以下
-1. 在 Hardhat 的 test 中部署一個 CErc20(`CErc20.sol`)，一個 Comptroller(`Comptroller.sol`) 以及合約初始化時相關必要合約，請遵循以下細節：
+1. 在 Foundry 的 test 中部署一個 CErc20(`CErc20.sol`)，一個 Comptroller(`Comptroller.sol`) 以及合約初始化時相關必要合約，請遵循以下細節：
     * CToken 的 decimals 皆為 18
     * 需部署一個 CErc20 的 underlying ERC20 token，decimals 為 18
     * 使用 `SimplePriceOracle` 作為 Oracle
@@ -19,7 +19,7 @@
     * User1 使用 token B 作為抵押品來借出 50 顆 token A
 4. 延續 (3.) 的借貸場景，調整 token B 的 collateral factor，讓 user1 被 user2 清算
 5. 延續 (3.) 的借貸場景，調整 oracle 中的 token B 的價格，讓 user1 被 user2 清算
-6. 請使用 Hardhat 的 fork 模式撰寫測試，並使用 AAVE 的 Flash loan 來清算 user1，請遵循以下細節：
+6. 請使用 Foundry 的 fork 模式撰寫測試，並使用 AAVE 的 Flash loan 來清算 user1，請遵循以下細節：
     * Fork Ethereum mainnet at block 15815693 ([Reference](https://hardhat.org/hardhat-network/docs/guides/forking-other-networks#resetting-the-fork))
     * cToken 的 decimals 皆為 18，初始 exchangeRate 為 1:1
     * Close factor 設定為 50%
@@ -53,7 +53,7 @@
 
 進階題: 
 1. 使用一套治理框架（例如 Governor Bravo 加上 Timelock）完成 Comptroller 中的設置
-2. 賞析 [UniswapAnchoredView](https://etherscan.io/address/0x65c816077c29b557bee980ae3cc2dce80204a0c5#code) 合約並使用其作為 Comptroller 中設置的 oracle 來實現清算
+2. 賞析 [UniswapAnchoredView](https://etherscan.io/address/0x50ce56A3239671Ab62f185704Caedf626352741e#code) 合約並使用其作為 Comptroller 中設置的 oracle 來實現清算
 3. 設計一個能透過 flash loan 清算多種代幣類型的智能合約
 4.  研究 [Aave](https://aave.com/) 協議，比較這些借貸協議在功能上與合約開發上的差異
 
