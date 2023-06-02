@@ -37,3 +37,6 @@
 [submodule "section3/CompoundPractice/lib/compound-protocol"]
 	path = section3/CompoundPractice/lib/compound-protocol
 	url = https://github.com/compound-finance/compound-protocol
+[submodule "section3/CompoundPractice/lib/openzeppelin-contracts"]
+	path = section3/CompoundPractice/lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
