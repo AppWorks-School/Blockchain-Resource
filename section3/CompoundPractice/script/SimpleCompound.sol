@@ -3,16 +3,17 @@ pragma solidity ^0.8.17;
 
 import "forge-std/Script.sol";
 //cToken
-import "../contracts/CErc20Delegator.sol";
-import "../contracts/CErc20Delegate.sol";
+import "compound-protocol/contracts/CErc20Delegate.sol";
+import "compound-protocol/contracts/CErc20Delegator.sol";
 import {ERC20} from "openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
 //comptroller
-import "../contracts/Unitroller.sol";
-import "../contracts/Comptroller.sol";
+import "compound-protocol/contracts/Unitroller.sol";
+import "compound-protocol/contracts/Comptroller.sol";
 //interestModel
-import "../contracts/WhitePaperInterestRateModel.sol";
+import "compound-protocol/contracts/WhitePaperInterestRateModel.sol";
+
 //priceOracle
-import "../contracts/SimplePriceOracle.sol";
+import "compound-protocol/contracts/SimplePriceOracle.sol";
 
 contract MyScript is Script {
     // oracle
