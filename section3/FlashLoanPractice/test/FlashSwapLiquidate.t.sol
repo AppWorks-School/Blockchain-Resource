@@ -17,6 +17,7 @@ contract FlashSwapLiquidateTest is Test {
     borrower = new Borrower();
     // Collateral factor will be decrease after borrow,
     // so that borrower can be liquidated.
+    // Borrower borrows USDC against DAI.
     borrower.borrow();
     
     liquidator = new FlashSwapLiquidate(); 
