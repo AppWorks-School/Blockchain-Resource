@@ -37,3 +37,21 @@
 [submodule "section3/CompoundPractice/lib/compound-protocol"]
 	path = section3/CompoundPractice/lib/compound-protocol
 	url = https://github.com/compound-finance/compound-protocol
+[submodule "section3/FlashLoanPractice/lib/forge-std"]
+	path = section3/FlashLoanPractice/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "section3/FlashLoanPractice/lib/openzeppelin-contracts"]
+	path = section3/FlashLoanPractice/lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
+[submodule "section3/FlashLoanPractice/lib/aave-v3-core"]
+	path = section3/FlashLoanPractice/lib/aave-v3-core
+	url = https://github.com/aave/aave-v3-core
+[submodule "section3/FlashLoanPractice/lib/v2-core"]
+	path = section3/FlashLoanPractice/lib/v2-core
+	url = https://github.com/uniswap/v2-core
+[submodule "section3/FlashLoanPractice/lib/compound-protocol"]
+	path = section3/FlashLoanPractice/lib/compound-protocol
+	url = https://github.com/compound-finance/compound-protocol
+[submodule "section3/FlashLoanPractice/lib/v2-periphery"]
+	path = section3/FlashLoanPractice/lib/v2-periphery
+	url = https://github.com/uniswap/v2-periphery
