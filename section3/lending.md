@@ -23,8 +23,8 @@
 
 5. 延續 (3.) 的借貸場景，調整 oracle 中 token B 的價格，讓 User1 被 User2 清算
 
-6. 請使用 Foundry 的 fork 模式撰寫測試，並使用 AAVE 的 Flash loan 來清算 User1，請遵循以下細節：
-    * Fork Ethereum mainnet at block 15815693 ([Reference](https://hardhat.org/hardhat-network/docs/guides/forking-other-networks#resetting-the-fork))
+6. 請使用 Foundry 的 fork testing 模式撰寫測試，並使用 AAVE 的 Flash loan 來清算 User1，請遵循以下細節：
+    * Fork Ethereum mainnet at block 15815693 ([Reference](https://book.getfoundry.sh/forge/fork-testing#examples))
     * cERC20 的 decimals 皆為 18，初始 exchangeRate 為 1:1
     * Close factor 設定為 50%
     * Liquidation incentive 設為 8% (1.08 * 1e18)
