@@ -27,6 +27,7 @@ contract FlashSwapLiquidateTest is Test {
   }
 
   function testFlashSwapLiquidate() public {
+    // Borrower borrowed 800k USDC
     uint256 repayAmount = 400_000 * 10 ** 6;
 
     liquidator.liquidate(address(borrower), repayAmount);
