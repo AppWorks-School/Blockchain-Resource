@@ -31,6 +31,5 @@ contract Borrower is Test {
     vm.prank(admin);
     uint256 err = comptroller._setCollateralFactor(cDAI, 0.7 * 1e18);
     require(err == 0, "Set collateral factor failed");
-    vm.stopPrank();
   }
 }
