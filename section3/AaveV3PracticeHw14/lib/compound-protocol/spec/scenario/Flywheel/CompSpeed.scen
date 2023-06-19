@@ -1,0 +1,231 @@
+-- Tests setting COMP (borrow/supply) speeds work properly
+-- Ensures setting various COMP speeds doesn't break the COMP distribution mechanisms
+-- Note: Ensuring the right amounts of COMP distributed is out of scope of these scenario tests (this is in the scope of flywheel scenario tests)
+
+Macro FlywheelComptroller price=1.0 compInitAmount=5000000e18
+    Unitroller Deploy
+    PriceOracle Deploy Fixed price
+    PriceOracleProxy Deploy Admin (PriceOracle Address) (Address Zero) (Address Zero) (Address Zero) (Address Zero) (Address Zero)
+    -- Deploy Comptroller
+    ComptrollerImpl Deploy Scenario ComptrollerScen
+    Unitroller SetPendingImpl ComptrollerScen
+    ComptrollerImpl ComptrollerScen Become
+    -- Configure Comptroller
+    Comptroller SetPriceOracle (PriceOracleProxy Address)
+    Comptroller SetCloseFactor 0.5
+    Comptroller LiquidationIncentive 1.1
+    -- Add markets
+    NewCToken ZRX cZRX
+    NewCToken BAT cBAT
+    Support cZRX collateralFactor:0.5
+    Support cBAT collateralFactor:0.5
+    -- Setup COMP token
+    Erc20 Deploy Standard COMP "COMP Token" 18
+    Give (Address Comptroller) compInitAmount COMP
+    Comptroller Send "setCompAddress(address)" (Address COMP)
+
+Macro InitUsage
+    Prep Geoff 100e18 ZRX cZRX
+    Mint Geoff 50e18 cZRX--tokenbalance = 50e18 / 2e9 = 2.5e10
+    Prep Coburn Some BAT cBAT
+    Mint Coburn 6e18 cBAT--tokenbalance = 6e18 / 2e9 = 3e9
+    EnterMarkets Coburn cBAT
+    Borrow Coburn 1e18 cZRX
+
+Macro UseEnvironment1
+    FlywheelComptroller
+    InitUsage
+
+Macro ClaimCompForAll
+    Comptroller ClaimComp Geoff
+    Comptroller ClaimComp Coburn
+
+Macro VerifyCompSpeeds cToken supplySpeed borrowSpeed
+    Assert Equal (Comptroller CompSupplySpeed cToken) supplySpeed
+    Assert Equal (Comptroller CompBorrowSpeed cToken) borrowSpeed
+
+Macro SetAndVerifyCompSpeeds cToken supplySpeed borrowSpeed
+    Comptroller SetCompSpeeds (cToken) ((Number supplySpeed)) ((Number borrowSpeed))
+    VerifyCompSpeeds cToken supplySpeed borrowSpeed
+    MineBlock -- Ensures we accrue COMP
+    ClaimCompForAll -- Ensures setting the COMP speeds didn't break the distribution mechanisms
+
+Test "COMP supply speed can be set"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 2e18 0e18
+
+Test "COMP supply speed can be set then unset"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 2e18 0e18
+    SetAndVerifyCompSpeeds cZRX 0e18 0e18
+
+Test "COMP supply speed can be set then set again"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 2e18 0e18
+    SetAndVerifyCompSpeeds cZRX 0e18 0e18
+    SetAndVerifyCompSpeeds cZRX 2e18 0e18
+
+Test "COMP supply speed can be set w/ borrow speed"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 2e18 1e18
+
+Test "COMP supply speed can be set then unset w/ borrow speed"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 2e18 1e18
+    SetAndVerifyCompSpeeds cZRX 0e18 1e18
+
+Test "COMP supply speed can be set then set, unset, and set again w/ borrow speed"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 2e18 1e18
+    SetAndVerifyCompSpeeds cZRX 0e18 1e18
+    SetAndVerifyCompSpeeds cZRX 2e18 1e18
+
+Test "COMP borrow speed can be set"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 0e18 2e18
+
+Test "COMP borrow speed can be set then unset"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 0e18 2e18
+    SetAndVerifyCompSpeeds cZRX 0e18 0e18
+
+Test "COMP borrow speed can be set then set again"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 0e18 2e18
+    SetAndVerifyCompSpeeds cZRX 0e18 0e18
+    SetAndVerifyCompSpeeds cZRX 0e18 2e18
+
+Test "COMP borrow speed can be set w/ supply speed"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 1e18 2e18
+
+Test "COMP borrow speed can be set then unset w/ supply speed"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 1e18 2e18
+    SetAndVerifyCompSpeeds cZRX 1e18 0e18
+
+Test "COMP borrow speed can be set then set, unset, and set again w/ supply speed"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 1e18 2e18
+    SetAndVerifyCompSpeeds cZRX 1e18 0e18
+    SetAndVerifyCompSpeeds cZRX 1e18 2e18
+
+Test "Many different COMP supply speeds can be set"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 2e18 0e18
+    SetAndVerifyCompSpeeds cBAT 3e18 0e18
+    VerifyCompSpeeds cZRX 2e18 0e18 -- Ensure these speeds weren't changed
+
+Test "Many different COMP supply speeds can be set then unset"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 2e18 0e18
+    SetAndVerifyCompSpeeds cBAT 3e18 0e18
+    VerifyCompSpeeds cZRX 2e18 0e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cBAT 0e18 0e18
+    VerifyCompSpeeds cZRX 2e18 0e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cZRX 0e18 0e18
+    VerifyCompSpeeds cBAT 0e18 0e18 -- Ensure these speeds weren't changed
+
+Test "Many different COMP supply speeds can be set, unset, and set again"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 2e18 0e18
+    SetAndVerifyCompSpeeds cBAT 3e18 0e18
+    VerifyCompSpeeds cZRX 2e18 0e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cBAT 0e18 0e18
+    VerifyCompSpeeds cZRX 2e18 0e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cZRX 0e18 0e18
+    VerifyCompSpeeds cBAT 0e18 0e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cZRX 5e18 0e18
+    VerifyCompSpeeds cBAT 0e18 0e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cBAT 6e18 0e18
+    VerifyCompSpeeds cZRX 5e18 0e18 -- Ensure these speeds weren't changed
+
+Test "Many different COMP supply speeds can be set w/ borrow speeds"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 2e18 1e18
+    SetAndVerifyCompSpeeds cBAT 3e18 1e18
+    VerifyCompSpeeds cZRX 2e18 1e18 -- Ensure these speeds weren't changed
+
+Test "Many different COMP supply speeds can be set then unset w/ borrow speeds"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 2e18 1e18
+    SetAndVerifyCompSpeeds cBAT 3e18 1e18
+    VerifyCompSpeeds cZRX 2e18 1e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cBAT 0e18 1e18
+    VerifyCompSpeeds cZRX 2e18 1e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cZRX 0e18 1e18
+    VerifyCompSpeeds cBAT 0e18 1e18 -- Ensure these speeds weren't changed
+
+Test "Many different COMP supply speeds can be set, unset, and set again w/ borrow speeds"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 2e18 1e18
+    SetAndVerifyCompSpeeds cBAT 3e18 1e18
+    VerifyCompSpeeds cZRX 2e18 1e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cBAT 0e18 1e18
+    VerifyCompSpeeds cZRX 2e18 1e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cZRX 0e18 1e18
+    VerifyCompSpeeds cBAT 0e18 1e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cZRX 5e18 1e18
+    VerifyCompSpeeds cBAT 0e18 1e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cBAT 6e18 1e18
+    VerifyCompSpeeds cZRX 5e18 1e18 -- Ensure these speeds weren't changed
+
+Test "Many different COMP borrow speeds can be set"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 0e18 2e18
+    SetAndVerifyCompSpeeds cBAT 0e18 3e18
+    VerifyCompSpeeds cZRX 0e18 2e18 -- Ensure these speeds weren't changed
+
+Test "Many different COMP borrow speeds can be set then unset"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 0e18 2e18
+    SetAndVerifyCompSpeeds cBAT 0e18 3e18
+    VerifyCompSpeeds cZRX 0e18 2e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cBAT 0e18 0e18
+    VerifyCompSpeeds cZRX 0e18 2e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cZRX 0e18 0e18
+    VerifyCompSpeeds cBAT 0e18 0e18 -- Ensure these speeds weren't changed
+
+Test "Many different COMP borrow speeds can be set, unset, and set again"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 0e18 2e18
+    SetAndVerifyCompSpeeds cBAT 0e18 3e18
+    VerifyCompSpeeds cZRX 0e18 2e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cBAT 0e18 0e18
+    VerifyCompSpeeds cZRX 0e18 2e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cZRX 0e18 0e18
+    VerifyCompSpeeds cBAT 0e18 0e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cZRX 0e18 5e18
+    VerifyCompSpeeds cBAT 0e18 0e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cBAT 0e18 6e18
+    VerifyCompSpeeds cZRX 0e18 5e18 -- Ensure these speeds weren't changed
+
+Test "Many different COMP borrow speeds can be set w/ supply speeds"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 1e18 2e18
+    SetAndVerifyCompSpeeds cBAT 1e18 3e18
+    VerifyCompSpeeds cZRX 1e18 2e18 -- Ensure these speeds weren't changed
+
+Test "Many different COMP borrow speeds can be set then unset w/ supply speeds"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 1e18 2e18
+    SetAndVerifyCompSpeeds cBAT 1e18 3e18
+    VerifyCompSpeeds cZRX 1e18 2e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cBAT 1e18 0e18
+    VerifyCompSpeeds cZRX 1e18 2e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cZRX 1e18 0e18
+    VerifyCompSpeeds cBAT 1e18 0e18 -- Ensure these speeds weren't changed
+
+Test "Many different COMP borrow speeds can be set, unset, and set again w/ supply speeds"
+    UseEnvironment1
+    SetAndVerifyCompSpeeds cZRX 1e18 2e18
+    SetAndVerifyCompSpeeds cBAT 1e18 3e18
+    VerifyCompSpeeds cZRX 1e18 2e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cBAT 1e18 0e18
+    VerifyCompSpeeds cZRX 1e18 2e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cZRX 1e18 0e18
+    VerifyCompSpeeds cBAT 1e18 0e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cZRX 1e18 5e18
+    VerifyCompSpeeds cBAT 1e18 0e18 -- Ensure these speeds weren't changed
+    SetAndVerifyCompSpeeds cBAT 1e18 6e18
+    VerifyCompSpeeds cZRX 1e18 5e18 -- Ensure these speeds weren't changed
