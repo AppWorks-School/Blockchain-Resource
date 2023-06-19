@@ -253,6 +253,10 @@ contract LendingPracticeTest is Test {
         console.log("cTokenB: ", address(cTokenB));
         cTokenA.borrow(borrowAmount);
         vm.stopPrank();
+        console.log("after - user1's tokenB: ", tokenB.balanceOf(user1));
+        console.log("after - user1's cTokenB: ", cTokenB.balanceOf(user1));
+        console.log("after - user1's tokenA: ", tokenA.balanceOf(user1));
+        console.log("after - user1's cTokenA: ", cTokenA.balanceOf(user1));
 
         // 假設調整 oracle 中 token B 的價格
         simplePriceOracle.setUnderlyingPrice(CToken(address(cTokenB)), 40e18);
@@ -267,6 +271,8 @@ contract LendingPracticeTest is Test {
         uint repayAmount = cTokenA.borrowBalanceCurrent(user1) * simplePriceOracle.getUnderlyingPrice(CToken(address(cTokenA))) * unitrollerProxy.closeFactorMantissa() / 1e18 ** 2;
 
         (, uint liquidity, uint shortfall) = unitrollerProxy.getAccountLiquidity(user1);
+        console.log("liquidity: ", liquidity);
+        console.log("shorfall: ", shortfall);
         assertGt(shortfall, 0);
 
         // user2 清算 user1
