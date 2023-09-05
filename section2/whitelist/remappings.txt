@@ -1,0 +1,9 @@
+ds-test/=lib/forge-std/lib/ds-test/src/
+forge-std/=lib/forge-std/src/
+murky/=lib/murky/
+openzeppelin-contracts/=lib/murky/lib/openzeppelin-contracts/
+lib/forge-std:ds-test/=lib/forge-std/lib/ds-test/src/
+lib/murky:ds-test/=lib/murky/lib/forge-std/lib/ds-test/src/
+lib/murky:forge-std/=lib/murky/lib/forge-std/src/
+lib/murky:openzeppelin-contracts/=lib/murky/lib/openzeppelin-contracts/
+oz/=lib/openzeppelin-contracts/contracts/

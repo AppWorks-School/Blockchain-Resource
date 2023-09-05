@@ -58,3 +58,9 @@
 [submodule "section2/whitelist/lib/forge-std"]
 	path = section2/whitelist/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "section2/whitelist/lib/murky"]
+	path = section2/whitelist/lib/murky
+	url = https://github.com/dmfxyz/murky
+[submodule "section2/whitelist/lib/openzeppelin-contracts"]
+	path = section2/whitelist/lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
