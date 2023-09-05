@@ -38,23 +38,15 @@ contract ERC721WhitelistTest is Test {
   }
 
   function test_mint_fail_with_wrong_index() public {
-    // Should be blank
-    vm.startPrank(user1.addr);
-    uint256 indexInLeaf = 1;
-    bytes32[] memory proof = m.getProof(leaf, indexInLeaf);
-    vm.expectRevert("ERC721Whitelist: Invalid proof.");
-    whitelist.mint(proof);
-    vm.stopPrank();
+    // TODO:
+    // 1. Prank user1
+    // 2. Mint to user1 with wrong index, should revert with "ERC721Whitelist: Invalid proof."
   }
 
   function test_mint_fail_when_duplicate() public {
-    // Should be blank
-    vm.startPrank(user1.addr);
-    uint256 indexInLeaf = 0;
-    bytes32[] memory proof = m.getProof(leaf, indexInLeaf);
-    whitelist.mint(proof);
-    vm.expectRevert("ERC721Whitelist: Already claimed.");
-    whitelist.mint(proof);
-    vm.stopPrank();
+    // TODO:
+    // 1. Prank user1
+    // 2. Mint to user1
+    // 3. Mint to user1 again, should revert with "ERC721Whitelist: Already claimed." 
   }
 }
