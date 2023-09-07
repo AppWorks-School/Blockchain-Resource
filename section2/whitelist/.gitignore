@@ -1,7 +1,6 @@
 # Compiler files
 cache/
 out/
-lib/
 
 # Ignores development broadcast logs
 !/broadcast
@@ -11,5 +10,20 @@ lib/
 # Docs
 docs/
 
-# Dotenv file
-.env
+artifacts
+node_modules
+coverage.json
+coverage
+typechain
+flattened
+slither
+/.DS_Store
+.idea
+contracts/hardhat-dependency-compiler/*
+.openzeppelin/unknown-31337.json
+.env*
+forge-cache/
+cache_forge/
+typechain-types
+
+*.ans.*
