@@ -55,3 +55,12 @@
 [submodule "section3/FlashLoanPractice/lib/v2-periphery"]
 	path = section3/FlashLoanPractice/lib/v2-periphery
 	url = https://github.com/uniswap/v2-periphery
+[submodule "section2/OpeaSeaHw/lib/forge-std"]
+	path = section2/OpeaSeaHw/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "section2/OpeaSeaHw/lib/seaport-sol"]
+	path = section2/OpeaSeaHw/lib/seaport-sol
+	url = https://github.com/ProjectOpenSea/seaport-sol
+[submodule "section2/OpeaSeaHw/lib/openzeppelin-contracts"]
+	path = section2/OpeaSeaHw/lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
