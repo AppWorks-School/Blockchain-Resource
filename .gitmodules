@@ -67,3 +67,6 @@
 [submodule "section2/ProxyPattern/lib/forge-std"]
 	path = section2/ProxyPattern/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "section2/ProxyPattern/lib/openzeppelin-contracts"]
+	path = section2/ProxyPattern/lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
