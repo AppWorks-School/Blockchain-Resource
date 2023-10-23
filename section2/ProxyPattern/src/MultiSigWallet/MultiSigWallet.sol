@@ -31,7 +31,7 @@ contract MultiSigWallet {
     owner3 = _owners[2];
   }
 
-  modifier onlyOnwer {
+  modifier onlyOwner {
     require(msg.sender == owner1 || msg.sender == owner2 || msg.sender == owner3, "not owner");
     _; 
   }
@@ -41,7 +41,7 @@ contract MultiSigWallet {
     _; 
   }
 
-  function submitTransaction(address _to, uint _value, bytes calldata data) external onlyOnwer {
+  function submitTransaction(address _to, uint _value, bytes calldata data) external onlyOwner {
     uint txIndex = transactions.length;
 
     transactions.push(Transaction({
@@ -54,14 +54,14 @@ contract MultiSigWallet {
     emit SubmitTransaction(txIndex, _to, _value);
   }
 
-  function confirmTransaction() external onlyOnwer {
+  function confirmTransaction() external onlyOwner {
     uint256 _txIndex = transactions.length - 1;
     Transaction storage transaction = transactions[_txIndex];
     transaction.numConfirmations += 1;
     isConfirmed[_txIndex][msg.sender] = true;
   }
 
-  function executeTransaction() external onlyOnwer {
+  function executeTransaction() external onlyOwner {
     uint256 _txIndex = transactions.length - 1;
     Transaction storage transaction = transactions[_txIndex];
     require(!transaction.executed, "tx already executed");
