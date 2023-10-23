@@ -25,9 +25,12 @@ contract BasicProxyTest is Test {
   function setUp() public {
     // vm.startPrank(admin);
     // wallet = new MultiSigWallet([alice, bob, carol]);
-    // proxy = new BasicProxy(address(wallet));
-    // vm.deal(address(proxy), 100 ether);
-    // proxyWallet is a contract that should be treated as a MultiSigWalleta
+
+    // 1. deploy proxy contract, which implementation should points at wallet's address
+
+    // 2. proxyWallet is a pointer that treats proxy contract as MultiSigWallet
+
+    // vm.deal(proxy, 100 ether);
     // vm.stopPrank();
   }
 

@@ -4,8 +4,8 @@ pragma solidity ^0.8.17;
 import { Test } from "forge-std/Test.sol";
 import { testERC20 } from "../src/test/testERC20.sol";
 import { testERC721 } from "../src/test/testERC721.sol";
-import { MultiSigWalletV2, MultiSigWallet } from "../src/Answers/MultiSigWalletV2.ans.sol";
-import { UpgradeableProxy } from "../src/Answers/UpgradeableProxy.ans.sol";
+import { MultiSigWalletV2, MultiSigWallet } from "../src/MultiSigWallet/MultiSigWalletV2.sol";
+import { UpgradeableProxy } from "../src/UpgradeableProxy.sol";
 
 contract MultiSigWalletV2Test is Test {
 
