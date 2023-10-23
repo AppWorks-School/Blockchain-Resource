@@ -74,14 +74,10 @@ contract MultiSigWallet {
     }
   }
 
-  function updateOwner(uint256 index, address _newOwner) external virtual {
-    if (index == 1) {
-      owner1 = _newOwner;
-    } else if (index == 2) {
-      owner2 = _newOwner;
-    } else if (index == 3) {
-      owner3 = _newOwner;
-    }
+  function updateOwner(address _newOwner1, address _newOwner2, address _newOwner3) external virtual {
+      owner1 = _newOwner1;
+      owner2 = _newOwner2;
+      owner3 = _newOwner3;
   }
 
   function destroy() external onlyAdmin {
