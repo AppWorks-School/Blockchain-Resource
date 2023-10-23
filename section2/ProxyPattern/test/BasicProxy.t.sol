@@ -5,8 +5,7 @@ import { Test } from "forge-std/Test.sol";
 import { testERC20 } from "../src/test/testERC20.sol";
 import { testERC721 } from "../src/test/testERC721.sol";
 import { MultiSigWallet } from "../src/MultiSigWallet/MultiSigWallet.sol";
-// import { BasicProxy } from "../src/BasicProxy.sol";
-import { BasicProxy } from "../src/Answers/BasicProxy.ans.sol";
+import { BasicProxy } from "../src/BasicProxy.sol";
 
 contract BasicProxyTest is Test {
 
@@ -24,14 +23,12 @@ contract BasicProxyTest is Test {
   testERC721 public erc721;
 
   function setUp() public {
-    vm.prank(admin);
-    wallet = new MultiSigWallet([alice, bob, carol]);
-    proxy = new BasicProxy(address(wallet));
-    vm.deal(address(proxy), 100 ether);
-    // proxyWallet is a contract that should be treated as a MultiSigWallet
-
-    erc20 = new testERC20();
-    erc721 = new testERC721();
+    // vm.startPrank(admin);
+    // wallet = new MultiSigWallet([alice, bob, carol]);
+    // proxy = new BasicProxy(address(wallet));
+    // vm.deal(address(proxy), 100 ether);
+    // proxyWallet is a contract that should be treated as a MultiSigWalleta
+    // vm.stopPrank();
   }
 
   function test_updateOwner() public {

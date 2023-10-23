@@ -6,11 +6,10 @@ import { testERC20 } from "../src/test/testERC20.sol";
 import { testERC721 } from "../src/test/testERC721.sol";
 import { MultiSigWalletV2, MultiSigWallet } from "../src/Answers/MultiSigWalletV2.ans.sol";
 import { UpgradeableProxy } from "../src/Answers/UpgradeableProxy.ans.sol";
-import "forge-std/console.sol";
 
 contract MultiSigWalletV2Test is Test {
 
-address public admin = makeAddr("admin");
+  address public admin = makeAddr("admin");
   address public alice = makeAddr("alice");
   address public bob = makeAddr("bob");
   address public carol = makeAddr("carol");
@@ -27,15 +26,16 @@ address public admin = makeAddr("admin");
   MultiSigWalletV2 public proxyWalletV2;
 
   function setUp() public {
-    vm.prank(admin);
-    wallet = new MultiSigWallet();
-    walletV2 = new MultiSigWalletV2();
+    // vm.startPrank(admin);
+    // wallet = new MultiSigWallet();
+    // walletV2 = new MultiSigWalletV2();
 
-    proxy = new UpgradeableProxy(address(wallet));
-    proxyWallet = MultiSigWallet(address(proxy));
-    vm.deal(address(proxy), 100 ether);
+    // proxy = new UpgradeableProxy(address(wallet));
+    // proxyWallet = MultiSigWallet(address(proxy));
+    // vm.deal(address(proxy), 100 ether);
 
-    proxyWallet.initialize([alice, bob, carol]);
+    // proxyWallet.initialize([alice, bob, carol]);
+    // vm.stopPrank();
   }
 
   function test_upgrade_can_upgrade() public {
