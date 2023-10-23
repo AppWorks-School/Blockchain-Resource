@@ -41,7 +41,7 @@ contract MultiSigWallet {
     _; 
   }
 
-  function submitTransaction(address _to, uint _value, bytes calldata data) external onlyOwner {
+  function submitTransaction(address _to, uint256 _value, bytes calldata data) external onlyOwner {
     uint txIndex = transactions.length;
 
     transactions.push(Transaction({
@@ -74,7 +74,7 @@ contract MultiSigWallet {
     }
   }
 
-  function updateOwner(uint256 index, address _newOwner) external {
+  function updateOwner(uint256 index, address _newOwner) external virtual {
     if (index == 1) {
       owner1 = _newOwner;
     } else if (index == 2) {

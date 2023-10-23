@@ -28,15 +28,37 @@ contract BasicProxyTest is Test {
     wallet = new MultiSigWallet([alice, bob, carol]);
     proxy = new BasicProxy(address(wallet));
     proxyWallet = MultiSigWallet(address(proxy));
+    vm.deal(address(proxy), 100 ether);
 
     erc20 = new testERC20();
     erc721 = new testERC721();
   }
 
   function test_updateOwner() public {
-    address one = address(0x1);
-    proxyWallet.updateOwner(1, one);
-    assertEq(proxyWallet.owner1(), one);
+    // 1. try to update Owner
+  }
+
+  function test_submit_tx() public {
+    // 1. prank as one of the owner
+
+    // 2. submit a transaction that transfer 10 ether to bob
+
+    // Does it success? Why it doesn't success?
+  }
+
+  function test_call_initialize_and_check() public {
+    // 1. call initialize function
+
+    // 2. check the owner1, owner2, owner3 is initialized
+  }
+
+  function test_call_initialize_and_submit_tx() public {
+
+    // 1. call initialize function
+
+    // 2. submit a transaction that transfer 10 ether to bob
+
+    // 3. check the transaction is submitted
   }
 
 }
