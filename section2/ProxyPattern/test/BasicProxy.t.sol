@@ -27,8 +27,8 @@ contract BasicProxyTest is Test {
     vm.prank(admin);
     wallet = new MultiSigWallet([alice, bob, carol]);
     proxy = new BasicProxy(address(wallet));
-    proxyWallet = MultiSigWallet(address(proxy));
     vm.deal(address(proxy), 100 ether);
+    // proxyWallet is a contract that should be treated as a MultiSigWallet
 
     erc20 = new testERC20();
     erc721 = new testERC721();
@@ -36,6 +36,8 @@ contract BasicProxyTest is Test {
 
   function test_updateOwner() public {
     // 1. try to update Owner
+
+    // 2. check the owner1 is alice, owner2 is bob and owner3 is carol
   }
 
   function test_submit_tx() public {
@@ -43,7 +45,7 @@ contract BasicProxyTest is Test {
 
     // 2. submit a transaction that transfer 10 ether to bob
 
-    // Does it success? Why it doesn't success?
+    // Does it success? Why?
   }
 
   function test_call_initialize_and_check() public {
