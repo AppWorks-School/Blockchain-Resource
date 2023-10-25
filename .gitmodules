@@ -76,3 +76,6 @@
 [submodule "section2/RugPullHw/lib/solmate"]
 	path = section2/RugPullHw/lib/solmate
 	url = https://github.com/transmissions11/solmate
+[submodule "section2/StandardProxy/lib/forge-std"]
+	path = section2/StandardProxy/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
