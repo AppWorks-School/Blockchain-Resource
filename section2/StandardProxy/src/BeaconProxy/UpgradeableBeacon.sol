@@ -26,6 +26,6 @@ contract UpgradeableBeacon is Slots, Proxy {
   }
 
   function implementation() external view returns (address) {
-    return _getSlotToAddress(IMPLEMENTATION_SLOT);
+    // TODO: return implementation address
   }  
 }
