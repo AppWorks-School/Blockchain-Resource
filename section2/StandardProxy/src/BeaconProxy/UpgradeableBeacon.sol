@@ -10,17 +10,19 @@ contract UpgradeableBeacon is Slots, Proxy {
   bytes32 constant ADMIN_SLOT = bytes32(uint256(keccak256("eip1967.proxy.admin")) - 1);
 
   constructor(address _impl) {
-    _setSlotToAddress(ADMIN_SLOT, msg.sender);
-    _setSlotToAddress(IMPLEMENTATION_SLOT, _impl);
+    // TODO:
+    // 1. set admin owner address at ADMIN_SLOT
+    // 2. set implementation address at IMPLEMENTATION_SLOT
   }
 
   modifier onlyAdmin {
-    require(msg.sender == _getSlotToAddress(ADMIN_SLOT), "only admin");
+    // TODO:
+    // 1. check if msg.sender is equal to admin owner address, if no then revert with Message "only admin"
     _;
   }
 
   function upgradeTo(address newImplementation) external onlyAdmin {
-    _setSlotToAddress(IMPLEMENTATION_SLOT, newImplementation);
+    // TODO: set implementation address at IMPLEMENTATION_SLOT
   }
 
   function implementation() external view returns (address) {

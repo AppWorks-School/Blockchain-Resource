@@ -10,7 +10,7 @@ contract BeaconProxy is Slots, Proxy {
   bytes32 constant BEACON_SLOT = bytes32(uint256(keccak256("eip1967.proxy.beacon")) - 1);
 
   constructor(address _beacon) {
-    _setSlotToAddress(BEACON_SLOT, _beacon);
+    // TODO: set beacon address at BEACON_SLOT
   }
 
   function _getBeacon() internal view returns (address) {
@@ -18,7 +18,7 @@ contract BeaconProxy is Slots, Proxy {
   }
 
   function _implemenation() internal view returns (address) {
-    return IBeacon(_getBeacon()).implementation();
+    // TODO: return implementation address from beacon
   }
 
   fallback() external payable {

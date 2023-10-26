@@ -39,20 +39,9 @@ contract BeaconProxyTest is Test {
   }
 
   function test_BeaconProxy_upgradeTo() public {
-    proxyWallet = MultiSigWallet(address(proxy1));
-    assertEq(proxyWallet.VERSION(), "0.0.1");
-    proxyWallet = MultiSigWallet(address(proxy2));
-    assertEq(proxyWallet.VERSION(), "0.0.1");
-    proxyWallet = MultiSigWallet(address(proxy3));
-    assertEq(proxyWallet.VERSION(), "0.0.1");
-
-    vm.prank(admin);
-    beacon.upgradeTo(address(walletV2));
-    proxyWalletV2 = MultiSigWalletV2(address(proxy1));
-    assertEq(proxyWalletV2.VERSION(), "0.0.2");
-    proxyWalletV2 = MultiSigWalletV2(address(proxy2));
-    assertEq(proxyWalletV2.VERSION(), "0.0.2");
-    proxyWalletV2 = MultiSigWalletV2(address(proxy3));
-    assertEq(proxyWalletV2.VERSION(), "0.0.2");
+    // TODO:
+    // 1. check if proxy is correctly proxied,  assert that proxyWallet.VERSION() is "0.0.1", both with proxy1, proxy2, proxy3
+    // 2. upgrade beacon implementation
+    // 3. check if proxy is correctly proxied,  assert that proxyWallet.VERSION() is "0.0.2", both with proxy1, proxy2, proxy3
   }
 }
