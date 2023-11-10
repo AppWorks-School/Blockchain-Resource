@@ -52,7 +52,7 @@ contract SimpleSwapSwapTest is SimpleSwapSetUp {
         simpleSwap.swap(tokenIn, tokenOut, amountIn);
     }
 
-    function test_should_be_able_to_swap_from_tokenA_to_tokenB() public {
+    function test_swap_from_tokenA_to_tokenB() public {
         address tokenIn = address(tokenA);
         address tokenOut = address(tokenB);
         uint256 amountIn = 100 * 10 ** tokenADecimals;
@@ -67,14 +67,14 @@ contract SimpleSwapSwapTest is SimpleSwapSetUp {
         vm.expectEmit(true, true, true, true);
         emit Swap(taker, tokenIn, tokenOut, amountIn, amountOut);
         simpleSwap.swap(tokenIn, tokenOut, amountIn);
-        assertEq(tokenA.balanceOf(address(taker)), takerBalanceABefore - amountIn);
-        assertEq(tokenB.balanceOf(address(taker)), takerBalanceBBefore + amountOut);
+        assertEq(tokenA.balanceOf(taker), takerBalanceABefore - amountIn);
+        assertEq(tokenB.balanceOf(taker), takerBalanceBBefore + amountOut);
         assertEq(tokenA.balanceOf(address(simpleSwap)), simpleSwapBalanceABefore + amountIn);
         assertEq(tokenB.balanceOf(address(simpleSwap)), simpleSwapBalanceBBefore - amountOut);
         vm.stopPrank();
     }
 
-    function test_should_be_able_to_swap_from_tokenB_to_tokenA() public {
+    function test_swap_from_tokenB_to_tokenA() public {
         address tokenIn = address(tokenB);
         address tokenOut = address(tokenA);
         uint256 amountIn = 100 * 10 ** tokenBDecimals;
@@ -89,8 +89,8 @@ contract SimpleSwapSwapTest is SimpleSwapSetUp {
         vm.expectEmit(true, true, true, true);
         emit Swap(taker, tokenIn, tokenOut, amountIn, amountOut);
         simpleSwap.swap(tokenIn, tokenOut, amountIn);
-        assertEq(tokenA.balanceOf(address(taker)), takerBalanceABefore + amountOut);
-        assertEq(tokenB.balanceOf(address(taker)), takerBalanceBBefore - amountIn);
+        assertEq(tokenA.balanceOf(taker), takerBalanceABefore + amountOut);
+        assertEq(tokenB.balanceOf(taker), takerBalanceBBefore - amountIn);
         assertEq(tokenA.balanceOf(address(simpleSwap)), simpleSwapBalanceABefore - amountOut);
         assertEq(tokenB.balanceOf(address(simpleSwap)), simpleSwapBalanceBBefore + amountIn);
         vm.stopPrank();

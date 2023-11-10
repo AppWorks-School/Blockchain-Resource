@@ -8,16 +8,16 @@ import { SimpleSwap } from "../../../contracts/SimpleSwap.sol";
 import { ISimpleSwapEvent } from "../../../contracts/interface/ISimpleSwap.sol";
 
 contract SimpleSwapSetUp is Test, ISimpleSwapEvent {
-    address taker = makeAddr("taker");
-    address maker = makeAddr("maker");
+    address public taker = makeAddr("taker");
+    address public maker = makeAddr("maker");
 
-    TestERC20 tokenA;
-    TestERC20 tokenB;
-    uint256 tokenADecimals;
-    uint256 tokenBDecimals;
-    uint256 slpDecimals;
+    TestERC20 public tokenA;
+    TestERC20 public tokenB;
+    uint256 public tokenADecimals;
+    uint256 public tokenBDecimals;
+    uint256 public slpDecimals;
 
-    SimpleSwap simpleSwap;
+    SimpleSwap public simpleSwap;
 
     function setUp() public virtual {
         tokenB = new TestERC20("token B", "TKB");
