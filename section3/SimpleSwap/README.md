@@ -1,7 +1,7 @@
 # SimpleSwap
-Implement a simple AMM swap (0% fee ratio) contract in `contracts/SimpleSwap.sol`. You must override all the external functions of `ISimpleSwap.sol`, and pass all the tests in `test/SimpleSwap.spec.ts`.
+Implement a **Simple AMM Swap** contract with a **0% fee** ratio in `contracts/SimpleSwap.sol`. Ensure that you **override all the external functions defined in `ISimpleSwap.sol`**, and that the implementation passes all the tests.
 
-Suggest reading the `natSpec` of `ISimpleSwap.sol` first and then implementing the contract. If you are not sure what the function is about, feel free to discuss it in the Discord channel.
+It is recommended to first read the NatSpec documentation in `ISimpleSwap.sol` before implementing the contract. If there are any uncertainties regarding the function's purpose or implementation, feel free to discuss them in the Discord channel.
 
 Reference:
 - UniswapV2-core: https://github.com/Uniswap/v2-core
@@ -17,7 +17,7 @@ Clone this repository, install Node.js dependencies, and build the source code:
 git clone git@github.com:AppWorks-School/Blockchain-Resource.git
 cd Blockchain-Resource/section3/SimpleSwap
 npm install
-npm run build
-npm run test
+npm run test:hardhat
+npm run test:foundry
 ```
 
