@@ -9,9 +9,9 @@ import { TestERC20 } from "../contracts/test/TestERC20.sol";
 
 contract UniswapV2PracticeTest is Test {
     IUniswapV2Router01 public constant UNISWAP_V2_ROUTER =
-        IUniswapV2Router01(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
+    IUniswapV2Router01(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
     IUniswapV2Factory public constant UNISWAP_V2_FACTORY =
-        IUniswapV2Factory(0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f);
+    IUniswapV2Factory(0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f);
     address public constant WETH9 = address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
 
     TestERC20 public testUSDC;
@@ -28,10 +28,11 @@ contract UniswapV2PracticeTest is Test {
 
         // mint 100 ETH, 10000 USDC to maker
         deal(maker, 100 ether);
-        testUSDC.mint(maker, 10000 * 10 ** testUSDC.decimals());
+        deal(address(testUSDC), maker, 10000 * 10 ** testUSDC.decimals());
 
-        // mint 1 ETH to taker
-        deal(taker, 100 ether);
+        // mint 1 ETH, 100 USDC to taker
+        deal(taker, 1 ether);
+        deal(address(testUSDC), taker, 100 * 10 ** testUSDC.decimals());
 
         // create ETH/USDC pair
         WETHTestUSDCPair = IUniswapV2Pair(UNISWAP_V2_FACTORY.createPair(address(WETH9), address(testUSDC)));
@@ -53,24 +54,26 @@ contract UniswapV2PracticeTest is Test {
         assertEq(reserve1, 100 ether);
     }
 
-    // # Practice 2: taker swap exact 100 ETH for testUSDC
+    // # Practice 2: taker swap exact 1 ETH for testUSDC
     function test_taker_swapExactETHForTokens() public {
-        // Impelement here
+        uint256 takerOriginalUsdcBalance = testUSDC.balanceOf(taker);
+        // Implement here
 
         // Checking
-        // # Disscussion 1: discuss why 4992488733 ?
-        assertEq(testUSDC.balanceOf(taker), 4992488733);
+        // # Discussion 1: why 98715803 ?
+        assertEq(testUSDC.balanceOf(taker) - takerOriginalUsdcBalance, 98715803);
         assertEq(taker.balance, 0);
     }
 
-    // # Practice 3: taker swap exact 10000 USDC for ETH
+    // # Practice 3: taker swap exact 100 USDC for ETH
     function test_taker_swapExactTokensForETH() public {
-        // Impelement here
+        uint256 takerOriginalETHBalance = taker.balance;
+        // Implement here
 
         // Checking
-        // # Disscussion 2: original balance is 100 ether, so delta is 49924887330996494742, but why 49924887330996494742 ?
+        // # Discussion 2: why 987158034397061298 ?
         assertEq(testUSDC.balanceOf(taker), 0);
-        assertEq(taker.balance, 149924887330996494742);
+        assertEq(taker.balance - takerOriginalETHBalance, 987158034397061298);
     }
 
     // # Practice 4: maker remove all liquidity
@@ -80,8 +83,10 @@ contract UniswapV2PracticeTest is Test {
         // Checking
         IUniswapV2Pair wethUsdcPair = IUniswapV2Pair(UNISWAP_V2_FACTORY.getPair(address(WETH9), address(testUSDC)));
         (uint112 reserve0, uint112 reserve1, ) = wethUsdcPair.getReserves();
-        assertEq(reserve0, 1);
-        assertEq(reserve1, 100000000);
+        assertEq(reserve0, 1); // MINIMUM_LIQUIDITY
+        assertEq(reserve1, 100000000); // MINIMUM_LIQUIDITY
+        assertEq(testUSDC.balanceOf(maker), 10000 * 10 ** testUSDC.decimals() - 1);
+        assertEq(maker.balance, 100 ether - 100000000);
     }
 
     function _create_erc20(string memory name, string memory symbol, uint8 decimals) internal returns (TestERC20) {
