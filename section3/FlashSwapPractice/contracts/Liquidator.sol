@@ -10,17 +10,10 @@ import { IUniswapV2Router01 } from "v2-periphery/interfaces/IUniswapV2Router01.s
 import { IWETH } from "v2-periphery/interfaces/IWETH.sol";
 import { IFakeLendingProtocol } from "./interfaces/IFakeLendingProtocol.sol";
 
-// This is liquidator contrac for testing,
+// This is liquidator contract for testing,
 // all you need to implement is flash swap from uniswap pool and call lending protocol liquidate function in uniswapV2Call
 // lending protocol liquidate rule can be found in FakeLendingProtocol.sol
 contract Liquidator is IUniswapV2Callee, Ownable {
-    struct CallbackData {
-        address tokenIn;
-        address tokenOut;
-        uint256 amountIn;
-        uint256 amountOut;
-    }
-
     address internal immutable _FAKE_LENDING_PROTOCOL;
     address internal immutable _UNISWAP_ROUTER;
     address internal immutable _UNISWAP_FACTORY;
@@ -52,24 +45,13 @@ contract Liquidator is IUniswapV2Callee, Ownable {
     //
 
     function uniswapV2Call(address sender, uint256 amount0, uint256 amount1, bytes calldata data) external override {
-        require(sender == address(this), "Sender must be this contract");
-        require(amount0 > 0 || amount1 > 0, "amount0 or amount1 must be greater than 0");
-
-        // 4. decode callback data
-        // 5. call liquidate
-        // 6. deposit ETH to WETH9, because we will get ETH from lending protocol
-        // 7. repay WETH to uniswap pool
-
-        // check profit
-        require(address(this).balance >= _MINIMUM_PROFIT, "Profit must be greater than 0.01 ether");
+        // TODO
     }
 
     // we use single hop path for testing
     function liquidate(address[] calldata path, uint256 amountOut) external {
         require(amountOut > 0, "AmountOut must be greater than 0");
-        // 1. get uniswap pool address
-        // 2. calculate repay amount
-        // 3. flash swap from uniswap pool
+        // TODO
     }
 
     receive() external payable {}
