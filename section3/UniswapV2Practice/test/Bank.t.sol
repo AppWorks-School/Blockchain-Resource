@@ -21,14 +21,13 @@ contract BankTest is Test {
 
         // alice deposit 10 ETH to contract
         vm.prank(alice);
-        bank.deposit{value: 10 ether}();
+        bank.deposit{ value: 10 ether }();
     }
 
     function test_attack() public {
         // 1. Deploy attack contract
         // 2. Exploit the bank
 
-        assertEq(bank.balances(address(this)), 0);
+        assertEq(address(bank).balance, 0);
     }
-
 }
