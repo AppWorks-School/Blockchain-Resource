@@ -20,6 +20,13 @@ contract Liquidator is IUniswapV2Callee, Ownable {
     address internal immutable _WETH9;
     uint256 internal constant _MINIMUM_PROFIT = 0.01 ether;
 
+    struct CallbackData {
+        address repayToken;
+        address borrowToken;
+        uint256 repayAmount;
+        uint256 borrowAmount;
+    }
+
     constructor(address lendingProtocol, address uniswapRouter, address uniswapFactory) {
         _FAKE_LENDING_PROTOCOL = lendingProtocol;
         _UNISWAP_ROUTER = uniswapRouter;
@@ -45,13 +52,31 @@ contract Liquidator is IUniswapV2Callee, Ownable {
     //
 
     function uniswapV2Call(address sender, uint256 amount0, uint256 amount1, bytes calldata data) external override {
-        // TODO
+        require(sender == address(this), "Sender must be this contract");
+        require(amount0 > 0 || amount1 > 0, "amount0 or amount1 must be greater than 0");
+        
+        (CallbackData memory callbackData) = abi.decode(data, (CallbackData));
+        IERC20(callbackData.borrowToken).approve(_FAKE_LENDING_PROTOCOL, callbackData.borrowAmount);
+        IFakeLendingProtocol(_FAKE_LENDING_PROTOCOL).liquidatePosition();
+        
+        IWETH(callbackData.repayToken).deposit{value: callbackData.repayAmount}();
+
+        address pairAddr = IUniswapV2Factory(_UNISWAP_FACTORY).getPair(callbackData.repayToken, callbackData.borrowToken);
+        require(msg.sender == pairAddr, "msg.serder must be uniswap pair");
+        IERC20(callbackData.repayToken).transfer(pairAddr, callbackData.repayAmount);
+        
+        require(address(this).balance >= _MINIMUM_PROFIT, "Profit must be greater than minimum profit");
     }
 
     // we use single hop path for testing
     function liquidate(address[] calldata path, uint256 amountOut) external {
         require(amountOut > 0, "AmountOut must be greater than 0");
-        // TODO
+
+        address pairAddr = IUniswapV2Factory(_UNISWAP_FACTORY).getPair(path[0], path[1]);
+        uint[] memory amounts = IUniswapV2Router01(_UNISWAP_ROUTER).getAmountsIn(amountOut, path);
+        
+        CallbackData memory callbackData = CallbackData(path[0], path[1], amounts[0], amountOut);
+        IUniswapV2Pair(pairAddr).swap(0, amountOut, address(this), abi.encode(callbackData));
     }
 
     receive() external payable {}
