@@ -6,17 +6,8 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { IUniswapV2Pair } from "v2-core/interfaces/IUniswapV2Pair.sol";
 import { IUniswapV2Callee } from "v2-core/interfaces/IUniswapV2Callee.sol";
 
-// This is a pracitce contract for flash swap arbitrage
+// This is a practice contract for flash swap arbitrage
 contract Arbitrage is IUniswapV2Callee, Ownable {
-    struct CallbackData {
-        address borrowPool;
-        address targetSwapPool;
-        address borrowToken;
-        address debtToken;
-        uint256 borrowAmount;
-        uint256 debtAmount;
-        uint256 debtAmountOut;
-    }
 
     //
     // EXTERNAL NON-VIEW ONLY OWNER
@@ -36,12 +27,7 @@ contract Arbitrage is IUniswapV2Callee, Ownable {
     //
 
     function uniswapV2Call(address sender, uint256 amount0, uint256 amount1, bytes calldata data) external override {
-        require(sender == address(this), "Sender must be this contract");
-        require(amount0 > 0 || amount1 > 0, "amount0 or amount1 must be greater than 0");
-
-        // 3. decode callback data
-        // 4. swap WETH to USDC
-        // 5. repay USDC to lower price pool
+        // TODO
     }
 
     // Method 1 is
@@ -54,11 +40,7 @@ contract Arbitrage is IUniswapV2Callee, Ownable {
     //  - repay WETH to higher pool
     // for testing convenient, we implement the method 1 here
     function arbitrage(address priceLowerPool, address priceHigherPool, uint256 borrowETH) external {
-        // 1. finish callbackData
-        // 2. flash swap (borrow WETH from lower price pool)
-
-        // Uncomment next line when you do the homework
-        // IUniswapV2Pair(priceLowerPool).swap(borrowETH, 0, address(this), abi.encode(callbackData));
+        // TODO
     }
 
     //
