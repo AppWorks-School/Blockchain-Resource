@@ -28,6 +28,12 @@ contract BankTest is Test {
         // 1. Deploy attack contract
         // 2. Exploit the bank
 
+        Attack attack = new Attack(address(bank));
+        vm.startPrank(attacker);
+        (bool success, ) = address(attack).call{ value: 1 ether }("");
+        require(success, "Deposit Failed");
+        attack.attack();
+        vm.stopPrank();
         assertEq(address(bank).balance, 0);
     }
 }
