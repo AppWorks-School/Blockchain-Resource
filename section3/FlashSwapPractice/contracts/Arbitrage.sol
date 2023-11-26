@@ -8,6 +8,15 @@ import { IUniswapV2Callee } from "v2-core/interfaces/IUniswapV2Callee.sol";
 
 // This is a practice contract for flash swap arbitrage
 contract Arbitrage is IUniswapV2Callee, Ownable {
+    struct CallbackData {
+        address priceLowerPool;
+        address priceHigherPool;
+        address priceLowerPoolTokenOut;
+        address priceLowerPoolTokenIn;
+        uint256 priceLowerPoolAmountOut;
+        uint256 priceHigherPoolAmountOut;
+        uint256 priceLowerPoolAmountIn;
+    }
 
     //
     // EXTERNAL NON-VIEW ONLY OWNER
@@ -27,7 +36,20 @@ contract Arbitrage is IUniswapV2Callee, Ownable {
     //
 
     function uniswapV2Call(address sender, uint256 amount0, uint256 amount1, bytes calldata data) external override {
-        // TODO
+        require(sender == address(this), "Sender must be this contract");
+        require(amount0 > 0 || amount1 > 0, "Amount must be greater than 0");
+        
+        // decode callbackData
+        CallbackData memory callbackData = abi.decode(data, (CallbackData));
+
+        // Transfer borrow token (ETH) to priceHigherPool
+        IERC20(callbackData.priceLowerPoolTokenOut).transfer(callbackData.priceHigherPool, callbackData.priceLowerPoolAmountOut);
+
+        // Swap WETH for USDC in higher price pool at priceHigherPool
+        IUniswapV2Pair(callbackData.priceHigherPool).swap(0, callbackData.priceHigherPoolAmountOut, address(this), "");
+
+        // Repay USDC to lower pool
+        IERC20(callbackData.priceLowerPoolTokenIn).transfer(callbackData.priceLowerPool, callbackData.priceLowerPoolAmountIn);
     }
 
     // Method 1 is
@@ -40,7 +62,31 @@ contract Arbitrage is IUniswapV2Callee, Ownable {
     //  - repay WETH to higher pool
     // for testing convenient, we implement the method 1 here
     function arbitrage(address priceLowerPool, address priceHigherPool, uint256 borrowETH) external {
-        // TODO
+        // Get the reserves of priceHigherPool
+        (uint256 reserve0, uint256 reserve1, ) = IUniswapV2Pair(priceHigherPool).getReserves();
+
+        // Calculate the amount of USDC after swap in priceHigherPool
+        uint256 priceHigherPoolAmountOut = _getAmountOut(borrowETH, reserve0, reserve1); 
+
+        // Get the reserves of priceLowerPool
+        (reserve0, reserve1, ) = IUniswapV2Pair(priceLowerPool).getReserves();
+
+        // Calculate the amount of USDC to repay to priceLowerPool
+        uint256 priceLowerPoolAmountIn = _getAmountIn(borrowETH, reserve1, reserve0);
+
+        // Organize the callback data
+        CallbackData memory callbackData = CallbackData(
+            priceLowerPool,
+            priceHigherPool,
+            IUniswapV2Pair(priceLowerPool).token0(), // WETH
+            IUniswapV2Pair(priceHigherPool).token1(), // USDC
+            borrowETH, // WETH borrow amount
+            priceHigherPoolAmountOut, // USDC swap amount
+            priceLowerPoolAmountIn // USDC repay amount
+        );
+
+        // borrow WETH from lower price pool
+        IUniswapV2Pair(priceLowerPool).swap(borrowETH, 0, address(this), abi.encode(callbackData));
     }
 
     //
