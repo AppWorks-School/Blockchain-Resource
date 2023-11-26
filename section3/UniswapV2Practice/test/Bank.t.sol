@@ -26,7 +26,12 @@ contract BankTest is Test {
 
     function test_attack() public {
         // 1. Deploy attack contract
+        vm.prank(attacker);
+        Attack attack = new Attack(address(bank));
+        // vm.deal(address(attack), 1 ether);
+        attack.deposit{ value: 1 ether }();
         // 2. Exploit the bank
+        attack.attack();
 
         assertEq(address(bank).balance, 0);
     }
