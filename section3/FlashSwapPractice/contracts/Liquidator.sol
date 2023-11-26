@@ -20,6 +20,13 @@ contract Liquidator is IUniswapV2Callee, Ownable {
     address internal immutable _WETH9;
     uint256 internal constant _MINIMUM_PROFIT = 0.01 ether;
 
+    struct CallbackData {
+        address tokenIn;
+        address tokenOut;
+        uint256 amountIn; // repay amount
+        uint256 amountOut; // borrow amount
+    }
+
     constructor(address lendingProtocol, address uniswapRouter, address uniswapFactory) {
         _FAKE_LENDING_PROTOCOL = lendingProtocol;
         _UNISWAP_ROUTER = uniswapRouter;
@@ -45,13 +52,39 @@ contract Liquidator is IUniswapV2Callee, Ownable {
     //
 
     function uniswapV2Call(address sender, uint256 amount0, uint256 amount1, bytes calldata data) external override {
-        // TODO
+        require(sender == address(this), "Sender must be this contract");
+        require(amount0 > 0 || amount1 > 0, "Amount must be greater than 0");
+
+        // 4. decode callback data
+        CallbackData memory callbackData = abi.decode(data, (CallbackData));
+
+        // 5. call liquidation
+        IERC20(callbackData.tokenOut).approve(_FAKE_LENDING_PROTOCOL, callbackData.amountOut); // approve 80 USDC to lending protocol
+        IFakeLendingProtocol(_FAKE_LENDING_PROTOCOL).liquidatePosition(); // get 1 eth
+
+        // 6. deposit ETH to WETH9
+        IWETH(_WETH9).deposit{ value: callbackData.amountIn }();
+
+        // 7. repay WETH to uniswap pool
+        IWETH(_WETH9).transfer(msg.sender, callbackData.amountIn);
+
+        // check profit
+        require(address(this).balance >= _MINIMUM_PROFIT, "Profit must be greater than 0.01 ether");
     }
 
     // we use single hop path for testing
     function liquidate(address[] calldata path, uint256 amountOut) external {
         require(amountOut > 0, "AmountOut must be greater than 0");
-        // TODO
+
+        // 1. get uniswap pool address
+        address pair = IUniswapV2Factory(_UNISWAP_FACTORY).getPair(path[0], path[1]);
+
+        // 2. calculate repay amount
+        uint256[] memory amountsIn = IUniswapV2Router01(_UNISWAP_ROUTER).getAmountsIn(amountOut, path);
+        
+        CallbackData memory callbackData = CallbackData(path[0], path[1], amountsIn[0], amountOut);
+        // 3. flash swap from the uniswap pool
+        IUniswapV2Pair(pair).swap(0, amountOut, address(this), abi.encode(callbackData));
     }
 
     receive() external payable {}
