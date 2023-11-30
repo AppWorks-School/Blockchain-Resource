@@ -21,6 +21,7 @@ contract CompoundPracticeTest is CompoundPracticeSetUp {
 
     // Deployed in CompoundPracticeSetUp helper
     borrower = IBorrower(borrowerAddress);
+    vm.makePersistent(address(borrower));
 
     user = makeAddr("User");  
 
@@ -44,12 +45,28 @@ contract CompoundPracticeTest is CompoundPracticeSetUp {
     vm.startPrank(user); 
     // TODO: 1. Mint some cUSDC with USDC
 
-    // 2. Borrower.borrow() will borrow some USDC
+    // 2. Borrower contract will borrow some USDC
     borrower.borrow();
 
     // TODO: 3. Modify block state to generate interest
 
 
     // TODO: 4. Redeem and check the redeemed amount
+  }
+
+  function test_compound_mint_interest_with_borrower_advanced() public {
+    vm.startPrank(user); 
+    // TODO: 1. Mint some cUSDC with USDC
+
+
+    address anotherBorrower = makeAddr("Another Borrower");
+    // TODO: 2. Borrow some USDC with another borrower
+    // vm.startPrank(anotherBorrower);
+
+    // TODO: 3. Modify block state to generate interest
+
+
+    // TODO: 4. Redeem and check the redeemed amount
+    // vm.startPrank(user); 
   }
 }

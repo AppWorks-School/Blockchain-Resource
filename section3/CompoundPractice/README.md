@@ -29,9 +29,9 @@ To get started with the Compound Practice repository, follow the steps below:
    forge build
    ```
 
-5. Run the tests:
+5. Run the tests in fork mode:
    ```shell
-   forge test
+   forge test --fork-url $RPC_URL
    ```
 
 Feel free to explore the code and dive into the exercises provided to enhance your understanding of Compound Finance. Happy practicing!
