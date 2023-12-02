@@ -85,3 +85,6 @@
 [submodule "homeworks/MyCompound/lib/compound-protocol"]
 	path = homeworks/MyCompound/lib/compound-protocol
 	url = https://github.com/compound-finance/compound-protocol
+[submodule "homeworks/MyCompound/lib/openzeppelin-contracts"]
+	path = homeworks/MyCompound/lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
