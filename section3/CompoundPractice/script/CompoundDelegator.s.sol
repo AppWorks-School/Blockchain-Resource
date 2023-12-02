@@ -8,7 +8,6 @@ import "compound-protocol/contracts/Comptroller.sol";
 import "compound-protocol/contracts/WhitePaperInterestRateModel.sol";
 import "compound-protocol/contracts/SimplePriceOracle.sol";
 import "compound-protocol/contracts/PriceOracle.sol";
-// import {ERC20} from "openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
 import "contracts/MyToken.sol";
 
 contract CompoundDelegator is Script {
