@@ -1,19 +1,25 @@
-## Foundry
+## MyCompound
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Sepolia testnet deployment contract address
 
-Foundry consists of:
+| Contract Name | Address |
+| --- | --- |
+| Unitroller | 0xC21e7eC69e539d4026188F29a0199E91c3A53465 |
+| Comptroller | 0x5358508C08441a11316c776a690505A7c04BFf91 |
+| SimplePriceOracle | 0xaF61d5EA93a25a727b971D248CAD4961DBA9e843 |
+| MyERC20 | 0x1A4D4E655f49e711Ca02a8639483621EC3eaE437 |
+| CErc20Delegate | 0x93fe443bDf651810B1cb15a2c7FF2fC3b4B66376 |
+| WhitePaperInterestRateModel | 0x2D23ebd386157d02368440B78C40DEC79aeee523 |
+| CErc20Delegator | 0x7DCE5d55d5c95928D9cd5301280E227Aa9A71D5a |
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
 
 ## Usage
+
+### Install
+
+```shell
+$ forge install
+```
 
 ### Build
 
@@ -27,40 +33,21 @@ $ forge build
 $ forge test
 ```
 
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
 ### Deploy
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+* Create `.env` in the project and set following variable
+
+```
+# your private key
+P_KEY = 0x0123....
+# CErc20Delegator contract admin address
+ADMIN = 0x9876....
 ```
 
-### Cast
+* Update foundry.toml to replace SEPOLIA_RPC_URL & ETHERSCAN_API_KEY to your information
+
+* run the following command to deploy MyCompound contract
 
 ```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+$ forge script script/MyCompound.s.sol:MyCompoundScript --rpc-url "${RPC_URL}" --broadcast --verify
+````
