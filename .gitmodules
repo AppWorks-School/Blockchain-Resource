@@ -82,3 +82,6 @@
 [submodule "homeworks/MyCompound/lib/forge-std"]
 	path = homeworks/MyCompound/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "homeworks/MyCompound/lib/compound-protocol"]
+	path = homeworks/MyCompound/lib/compound-protocol
+	url = https://github.com/compound-finance/compound-protocol
