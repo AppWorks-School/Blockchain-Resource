@@ -25,7 +25,8 @@ contract CompoundDelegator is Script {
     CErc20Delegator public cUL;
 
     function run() public {
-        vm.startBroadcast();
+        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+        vm.startBroadcast(deployerPrivateKey);
 
         // 1. Deploy a underlying ERC20 contract
         UL = new MyToken("underlying ERC20 token", "UL");
