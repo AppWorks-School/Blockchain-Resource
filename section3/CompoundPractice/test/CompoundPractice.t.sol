@@ -25,10 +25,7 @@ contract CompoundPracticeTest is CompoundPracticeSetUp {
     // Deployed in CompoundPracticeSetUp helper
     borrower = IBorrower(borrowerAddress);
     vm.makePersistent(address(borrower));
-<<<<<<< HEAD
     vm.createSelectFork("https://eth-mainnet.g.alchemy.com/v2/RT3UW2hCYor5k6FJBIqMx5hm3sgdhKwm");
-=======
->>>>>>> upstream/main
 
     user = makeAddr("User");  
 
@@ -66,12 +63,9 @@ contract CompoundPracticeTest is CompoundPracticeSetUp {
     USDC.approve(address(cUSDC), mintedAmount);
     uint256 mintCode = cUSDC.mint(mintedAmount);
 
-<<<<<<< HEAD
     assertEq(mintCode, 0);
 
 
-=======
->>>>>>> upstream/main
     // 2. Borrower contract will borrow some USDC
     borrower.borrow();
 
