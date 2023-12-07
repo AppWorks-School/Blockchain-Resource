@@ -79,3 +79,6 @@
 [submodule "section2/StandardProxy/lib/forge-std"]
 	path = section2/StandardProxy/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "section3/CompoundPractice/lib/openzeppelin-contracts"]
+	path = section3/CompoundPractice/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
