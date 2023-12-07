@@ -29,7 +29,7 @@ contract GovernanceScript is Script {
   }
 
   function propose() public {
-    // TODO: Submit a proposal, remember that your address requires 100 COMP of voting power.
+    // TODO: Submit a proposal, remember that your address requires 200 COMP of voting power.
 
   }
 
