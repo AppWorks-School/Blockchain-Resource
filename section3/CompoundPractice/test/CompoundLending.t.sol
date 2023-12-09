@@ -235,8 +235,10 @@ contract CompoundLending is Test {
         // user 2 use tokenA to repay
         assertEq(tokenA.balanceOf(user2), initialTokenAAmount - 25 * 10 ** tokenA.decimals(), "user2 balance A is incorrect");
 
-        // user 2 get 5 %( liquidation incentive) of collateral cTokenB as reward
+        // user 2 get collateral cTokenB as reward
         assertGt(cTokenB.balanceOf(user2), 0, "user 2 cTokenB balance should greate than 0");
+
+         console.log(cTokenB.balanceOf(user2));
 
         vm.stopPrank();
     }
@@ -302,9 +304,9 @@ contract CompoundLending is Test {
         // user 2 use tokenA to repay
         assertEq(tokenA.balanceOf(user2), initialTokenAAmount - 25 * 10 ** tokenA.decimals(), "user2 balance A is incorrect");
 
-        // user 2 get 5 %( liquidation incentive) of collateral cTokenB as reward
+        // user 2 get collateral cTokenB as reward
         assertGt(cTokenB.balanceOf(user2), 0, "user 2 cTokenB balance should greate than 0");
-
+        
         vm.stopPrank();
     }
 }
