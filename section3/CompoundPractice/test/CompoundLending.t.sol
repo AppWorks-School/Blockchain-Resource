@@ -130,15 +130,17 @@ contract CompoundLending is Test {
     }
 
     function testBorrowAndRepay() public {
+        uint256 initialTokenAAmount = 30000 * 10 ** tokenA.decimals();
         uint256 initialTokenBAmount = 30000 * 10 ** tokenB.decimals();
         uint256 mintTokenBAmount = 1 * 10 ** tokenB.decimals();
         uint256 borrowTokenAAmmount = 50 * 10 ** tokenA.decimals();
 
-        // Give user1 token B initial amount
+        // Give user1 token A, token B initial amount
+        deal(address(tokenA), user1, initialTokenAAmount);
         deal(address(tokenB), user1, initialTokenBAmount);
-        
+
         // Give cTokenA enough tokenA to borrow
-        deal(address(tokenA), address(cTokenA), 99999 * 10 ** tokenA.decimals());
+        deal(address(tokenA), address(cTokenA), 30000 * 10 ** tokenA.decimals());
 
         vm.startPrank(user1);
 
@@ -158,13 +160,13 @@ contract CompoundLending is Test {
         // borrow 50 tokenA
         cTokenA.borrow(borrowTokenAAmmount);
 
-        assertEq(tokenA.balanceOf(user1), borrowTokenAAmmount);
+        assertEq(tokenA.balanceOf(user1), initialTokenAAmount + borrowTokenAAmmount);
 
         // user 1 approve and repay 50 tokenA
         tokenA.approve(address(cTokenA), borrowTokenAAmmount);
         cTokenA.repayBorrow(borrowTokenAAmmount);
 
-        assertEq(tokenA.balanceOf(user1), 0);
+        assertEq(tokenA.balanceOf(user1), initialTokenAAmount);
 
         vm.stopPrank();
     }
