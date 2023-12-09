@@ -40,6 +40,12 @@ contract CompoundLending is Test {
     address user1;
     address user2;
 
+    // common variables
+    uint256 public initialTokenAAmount;
+    uint256 public initialTokenBAmount;
+    uint256 public mintAmount;
+    uint256 public borrowTokenAAmmount;
+
     function setUp() public {
         // deploy comptroller
         comptroller = new Comptroller();
@@ -105,54 +111,46 @@ contract CompoundLending is Test {
         comptrollerProxy._setCloseFactor(0.5 * 1e18);
         // set Liquidation incentive
         comptrollerProxy._setLiquidationIncentive(1.05 * 1e18);
+
+        // set common amount
+        initialTokenAAmount = 100 * 10 ** tokenA.decimals();
+        initialTokenBAmount = 100 * 10 ** tokenB.decimals();
+        mintAmount = 1 * 10 ** tokenB.decimals();
+        borrowTokenAAmmount = 50 * 10 ** tokenA.decimals();
+
+        // set initial ammount
+        deal(address(tokenA), user1, initialTokenAAmount);
+        deal(address(tokenA), user2, initialTokenAAmount);
+        deal(address(tokenB), user1, initialTokenBAmount);
+        deal(address(tokenB), user2, initialTokenBAmount);
     }
 
     function testMintAndRedeem() public {
-        uint256 initialAmount = 300 * 10 ** tokenA.decimals();
-        uint256 mintAmount = 100 * 10 ** tokenA.decimals();
-
-        // Give user 1 token A initial amount
-        deal(address(tokenA), user1, initialAmount);
-
         vm.startPrank(user1);
  
         // user 1 use 100 ERC20 tokens to mint 100 cERC20 tokens.
         ERC20(tokenA).approve(address(cTokenA), mintAmount);
         cTokenA.mint(mintAmount);
 
-        assertEq(tokenA.balanceOf(user1), initialAmount - mintAmount);
+        assertEq(tokenA.balanceOf(user1), initialTokenAAmount - mintAmount);
         assertEq(cTokenA.balanceOf(user1), mintAmount);
 
         // user 1 use 100 cERC20 tokens to redeem 100 ERC20 tokens.
         cTokenA.redeem(mintAmount);
 
-        assertEq(tokenA.balanceOf(user1), initialAmount);
+        assertEq(tokenA.balanceOf(user1), initialTokenAAmount);
         assertEq(cTokenA.balanceOf(user1), 0);
 
         vm.stopPrank();
     }
 
-    function testBorrowAndRepay() public {
-        uint256 initialTokenAAmount = 100 * 10 ** tokenA.decimals();
-        uint256 initialTokenBAmount = 100 * 10 ** tokenB.decimals();
-        uint256 mintTokenBAmount = 1 * 10 ** tokenB.decimals();
-        uint256 borrowTokenAAmmount = 50 * 10 ** tokenA.decimals();
-
-        // Give user1 token A, token B initial amount
-        deal(address(tokenA), user1, initialTokenAAmount);
-        deal(address(tokenB), user1, initialTokenBAmount);
-
-        // Give cTokenA enough tokenA to borrow
-        deal(address(tokenA), address(cTokenA), 30000 * 10 ** tokenA.decimals());
-
-        vm.startPrank(user1);
-
+    function  mintCTokenBAndBorrowTokenA() internal {
         // user 1 use 1 token B to mint cTokenB
-        ERC20(tokenB).approve(address(cTokenB), mintTokenBAmount);
-        cTokenB.mint(mintTokenBAmount);
+        ERC20(tokenB).approve(address(cTokenB), mintAmount);
+        cTokenB.mint(mintAmount);
 
-        assertEq(tokenB.balanceOf(user1), initialTokenBAmount - mintTokenBAmount);
-        assertEq(cTokenB.balanceOf(user1), mintTokenBAmount);
+        assertEq(tokenB.balanceOf(user1), initialTokenBAmount - mintAmount);
+        assertEq(cTokenB.balanceOf(user1), mintAmount);
 
         // user 1 use tokenB as collateral for borrow 50 tokenA
         // enter cTokenB market
@@ -164,149 +162,72 @@ contract CompoundLending is Test {
         cTokenA.borrow(borrowTokenAAmmount);
 
         assertEq(tokenA.balanceOf(user1), initialTokenAAmount + borrowTokenAAmmount);
+    }
 
+
+    function testBorrowAndRepay() public {
+        // Give cTokenA enough tokenA to borrow
+        deal(address(tokenA), address(cTokenA), 30000 * 10 ** tokenA.decimals());
+        vm.startPrank(user1);
+        mintCTokenBAndBorrowTokenA();
         // user 1 approve and repay 50 tokenA
         tokenA.approve(address(cTokenA), borrowTokenAAmmount);
         cTokenA.repayBorrow(borrowTokenAAmmount);
-
         assertEq(tokenA.balanceOf(user1), initialTokenAAmount);
-
         vm.stopPrank();
     }
 
     function testLiquidateByAdjustCollateralFactor() public {
-        // user1 mint cTokenB and use cToken as collateral for borrow TokenA
-        uint256 initialTokenAAmount = 100 * 10 ** tokenA.decimals();
-        uint256 initialTokenBAmount = 100 * 10 ** tokenB.decimals();
-        uint256 mintTokenBAmount = 1 * 10 ** tokenB.decimals();
-        uint256 borrowTokenAAmmount = 50 * 10 ** tokenA.decimals();
-
-        // Give user1 token A, token B initial amount
-        deal(address(tokenA), user1, initialTokenAAmount);
-        deal(address(tokenB), user1, initialTokenBAmount);
-
         // Give cTokenA enough tokenA to borrow
         deal(address(tokenA), address(cTokenA), 30000 * 10 ** tokenA.decimals());
-
         vm.startPrank(user1);
-
-        // user 1 use 1 token B to mint cTokenB
-        ERC20(tokenB).approve(address(cTokenB), mintTokenBAmount);
-        cTokenB.mint(mintTokenBAmount);
-
-        assertEq(tokenB.balanceOf(user1), initialTokenBAmount - mintTokenBAmount);
-        assertEq(cTokenB.balanceOf(user1), mintTokenBAmount);
-
-        // user 1 use tokenB as collateral for borrow 50 tokenA
-        // enter cTokenB market
-        address[] memory addr = new address[](1);
-        addr[0] = address(cTokenB);
-        comptrollerProxy.enterMarkets(addr);
-        
-        // borrow 50 tokenA
-        cTokenA.borrow(borrowTokenAAmmount);
-
-        assertEq(tokenA.balanceOf(user1), initialTokenAAmount + borrowTokenAAmmount);
-
+        mintCTokenBAndBorrowTokenA();
         vm.stopPrank();
-
         // Adjust collateral factor
         comptrollerProxy._setCollateralFactor(CToken(address(cTokenB)) , 0.4e18);
-
         vm.startPrank(user2);
-
         // check shortfall
         // The borrower must have shortfall in order to be liquidatable
         (, , uint shortfall) = comptrollerProxy.getAccountLiquidity(user1);
         require(shortfall > 0, "no shortfall, not liquidatable");
-
         // give user2 enough tokenA to liquidateBorrow
         deal(address(tokenA), user2, initialTokenAAmount);
-
         // approve cTokenA to use user2's tokenA to liquidate
         tokenA.approve(address(cTokenA),  25 * 10 ** tokenA.decimals());
-
         uint256 errCode = cTokenA.liquidateBorrow(user1, 25 * 10 ** tokenA.decimals(), cTokenB);
-
         require(errCode == 0, "liquidateBorrow failed");
-
         // As a liquidator, user2 can get user1's collateral cTokenB
-
         // user 2 use tokenA to repay
         assertEq(tokenA.balanceOf(user2), initialTokenAAmount - 25 * 10 ** tokenA.decimals(), "user2 balance A is incorrect");
-
         // user 2 get collateral cTokenB as reward
         assertGt(cTokenB.balanceOf(user2), 0, "user 2 cTokenB balance should greate than 0");
-
-         console.log(cTokenB.balanceOf(user2));
-
         vm.stopPrank();
     }
 
     function testLiquidateByAdjustTokenBPrice() public {
-        // user1 mint cTokenB and use cToken as collateral for borrow TokenA
-        uint256 initialTokenAAmount = 100 * 10 ** tokenA.decimals();
-        uint256 initialTokenBAmount = 100 * 10 ** tokenB.decimals();
-        uint256 mintTokenBAmount = 1 * 10 ** tokenB.decimals();
-        uint256 borrowTokenAAmmount = 50 * 10 ** tokenA.decimals();
-
-        // Give user1 token A, token B initial amount
-        deal(address(tokenA), user1, initialTokenAAmount);
-        deal(address(tokenB), user1, initialTokenBAmount);
-
         // Give cTokenA enough tokenA to borrow
         deal(address(tokenA), address(cTokenA), 30000 * 10 ** tokenA.decimals());
-
         vm.startPrank(user1);
-
-        // user 1 use 1 token B to mint cTokenB
-        ERC20(tokenB).approve(address(cTokenB), mintTokenBAmount);
-        cTokenB.mint(mintTokenBAmount);
-
-        assertEq(tokenB.balanceOf(user1), initialTokenBAmount - mintTokenBAmount);
-        assertEq(cTokenB.balanceOf(user1), mintTokenBAmount);
-
-        // user 1 use tokenB as collateral for borrow 50 tokenA
-        // enter cTokenB market
-        address[] memory addr = new address[](1);
-        addr[0] = address(cTokenB);
-        comptrollerProxy.enterMarkets(addr);
-        
-        // borrow 50 tokenA
-        cTokenA.borrow(borrowTokenAAmmount);
-
-        assertEq(tokenA.balanceOf(user1), initialTokenAAmount + borrowTokenAAmmount);
-
+        mintCTokenBAndBorrowTokenA();
         vm.stopPrank();
-
         // Adjust Token B price
         simplePriceOracle.setUnderlyingPrice(CToken(address(cTokenB)), 90);
-
         vm.startPrank(user2);
-
         // check shortfall
         // The borrower must have shortfall in order to be liquidatable
         (, , uint shortfall) = comptrollerProxy.getAccountLiquidity(user1);
         require(shortfall > 0, "no shortfall, not liquidatable");
-
         // give user2 enough tokenA to liquidateBorrow
         deal(address(tokenA), user2, initialTokenAAmount);
-
         // approve cTokenA to use user2's tokenA to liquidate
         tokenA.approve(address(cTokenA),  25 * 10 ** tokenA.decimals());
-
         uint256 errCode = cTokenA.liquidateBorrow(user1, 25 * 10 ** tokenA.decimals(), cTokenB);
-
         require(errCode == 0, "liquidateBorrow failed");
-
         // As a liquidator, user2 can get user1's collateral cTokenB
-
         // user 2 use tokenA to repay
         assertEq(tokenA.balanceOf(user2), initialTokenAAmount - 25 * 10 ** tokenA.decimals(), "user2 balance A is incorrect");
-
         // user 2 get collateral cTokenB as reward
         assertGt(cTokenB.balanceOf(user2), 0, "user 2 cTokenB balance should greate than 0");
-        
         vm.stopPrank();
     }
 }
