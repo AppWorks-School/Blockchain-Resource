@@ -15,9 +15,9 @@ contract FlashSwapLiquidateTest is Test {
     vm.createSelectFork(rpc);
 
     borrower = new Borrower();
-    // Collateral factor will be decrease after borrow,
-    // so that borrower can be liquidated.
-    // Borrower borrows USDC against DAI.
+    // The collateral factor will decrease after borrowing inside borrower.borrow(),
+    // so that the borrower can be liquidated.
+    // The borrower borrows USDC against DAI (Use DAI as collateral).
     borrower.borrow();
     
     liquidator = new FlashSwapLiquidate(); 
@@ -28,6 +28,7 @@ contract FlashSwapLiquidateTest is Test {
 
   function testFlashSwapLiquidate() public {
     // Borrower borrowed 800k USDC
+    // Close factor is 50%
     uint256 repayAmount = 400_000 * 10 ** 6;
 
     liquidator.liquidate(address(borrower), repayAmount);
