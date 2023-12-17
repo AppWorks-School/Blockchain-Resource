@@ -2,7 +2,7 @@ pragma solidity ^0.8.20;
 
 import "../../lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
 
-contract CurtaToken is ERC20 {
+contract AppworksToken is ERC20 {
     address public owner;
 
     constructor(string memory name_, string memory symbol_, address owner_) ERC20(name_, symbol_) {

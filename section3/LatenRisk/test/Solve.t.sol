@@ -2,16 +2,16 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
-import "../src/curta-cup-latent-risk-public/Challenge.sol";
+import "../src/challenge/Challenge.sol";
 import "../src/Exploit.sol";
 
 contract Solve is Test {
     Challenge public chall;
 
-    CurtaToken public CUSD;
-    CurtaToken public CStUSD;
-    CurtaToken public CETH;
-    CurtaToken public CWETH;
+    AppworksToken public CUSD;
+    AppworksToken public CStUSD;
+    AppworksToken public CETH;
+    AppworksToken public CWETH;
 
     CErc20Immutable public CCUSD;
     CErc20Immutable public CCStUSD;

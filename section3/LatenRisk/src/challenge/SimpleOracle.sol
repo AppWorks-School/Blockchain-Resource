@@ -2,7 +2,7 @@ pragma solidity ^0.8.20;
 
 import "./PriceOracle.sol";
 
-contract CurtaOracle is PriceOracle {
+contract SimpleOracle is PriceOracle {
     address public owner;
     mapping(address => uint256) priceOf;
 

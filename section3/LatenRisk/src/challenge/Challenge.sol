@@ -4,8 +4,8 @@ pragma solidity ^0.8.20;
 import "./Comptroller.sol";
 import "./JumpRateModel.sol";
 import "./CErc20Immutable.sol";
-import "./CurtaToken.sol";
-import "./CurtaOracle.sol";
+import "./AppworksToken.sol";
+import "./SimpleOracle.sol";
 
 contract Deployer {
     function create(address underlying_,
@@ -17,8 +17,8 @@ contract Deployer {
                 return new CErc20Immutable(underlying_, comptroller_, interestRateModel_, initialExchangeRateMantissa_, name_, symbol_, uint8(18), payable(msg.sender));
     }
 
-    function create2(string memory a, string memory b) external returns (CurtaToken) {
-        return new CurtaToken(a, b, msg.sender);
+    function create2(string memory a, string memory b) external returns (AppworksToken) {
+        return new AppworksToken(a, b, msg.sender);
     }
 }
 
@@ -29,17 +29,17 @@ contract Challenge {
     Comptroller public comptroller;
     JumpRateModel public rateModel;
 
-    CurtaToken public CUSD;
-    CurtaToken public CStUSD;
-    CurtaToken public CETH;
-    CurtaToken public CWETH;
+    AppworksToken public CUSD;
+    AppworksToken public CStUSD;
+    AppworksToken public CETH;
+    AppworksToken public CWETH;
 
     CErc20Immutable public CCUSD;
     CErc20Immutable public CCStUSD;
     CErc20Immutable public CCETH;
     CErc20Immutable public CCWETH;
 
-    CurtaOracle public oracle;
+    SimpleOracle public oracle;
 
     bool public initialized;
 
@@ -61,7 +61,7 @@ contract Challenge {
 
         rateModel = new JumpRateModel(2102400, 2102400, 2102400, type(uint256).max);
         comptroller = new Comptroller();
-        oracle = new CurtaOracle();
+        oracle = new SimpleOracle();
         
         CCUSD =
         dd.create(address(CUSD), ComptrollerInterface(address(comptroller)), InterestRateModel(address(rateModel)), 1e18, "CCUSD", "cCUSD");
