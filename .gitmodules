@@ -88,3 +88,6 @@
 [submodule "section3/CompoundGovernancePractice/lib/openzeppelin-contracts"]
 	path = section3/CompoundGovernancePractice/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "section3/LatenRisk/lib/forge-std"]
+	path = section3/LatenRisk/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
